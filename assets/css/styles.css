@@ -188,3 +188,14 @@ details[open]{border-color:#d4b038}.arrows button:hover,.pain-grid li:hover,.sca
 .fitcard li{flex:1;display:flex;align-items:center;border-top:1px solid rgba(212,176,56,.22);padding-left:34px}.fitcard li::before{top:50%;transform:translateY(-50%)}
 .yes li::before{color:#e8c961}.no li::before{color:#8a8578}.fitcard.no{opacity:.95}
 .go svg path,.more svg path{stroke:#e8c961}.gcard.flag .go svg path{stroke:#000}
+/* hero con foto: personas a la derecha, texto a la izquierda */
+.hero[style*="--img"]{--pos:75% center}
+.hero[style*="--img"]::after{background:linear-gradient(90deg,rgba(0,0,0,.72) 0%,rgba(0,0,0,.35) 45%,rgba(0,0,0,0) 70%),linear-gradient(to top,rgba(0,0,0,.45),transparent 35%)}
+@media(max-width:800px){.hero[style*="--img"]{--pos:82% bottom}.hero[style*="--img"]::after{background:linear-gradient(to top,rgba(0,0,0,.92) 25%,rgba(0,0,0,.35) 75%)}.hero{min-height:100svh}}
+@media(min-width:801px){.hero[style*="--img"] .hero-in{max-width:640px}.hero[style*="--img"] h1{max-width:100%}}
+@media(max-width:800px){
+ .hero[style*="--img"]{background-size:auto 44%,cover,cover;background-position:right 64px,center,center;background-repeat:no-repeat}
+ .hero[style*="--img"]::after{background:linear-gradient(to top,rgba(0,0,0,.96) 38%,rgba(0,0,0,.4) 62%,rgba(0,0,0,0) 80%)}
+}
+@media(min-width:801px){.hero[style*="--img"] .hero-in{max-width:var(--max)}.hero[style*="--img"] .hero-in>*{max-width:620px}.hero[style*="--img"] .hero-in>.row{max-width:none}}
+@media(max-width:800px){.hero .btn{padding:14px 20px;font-size:11px;letter-spacing:.04em}}
