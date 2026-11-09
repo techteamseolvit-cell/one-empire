@@ -383,3 +383,15 @@ details[open]{border-color:#d4b038}.arrows button:hover,.pain-grid li:hover,.sca
 .gcard.pil::before{background-size:100% auto;background-position:center bottom;opacity:.7;-webkit-mask-image:linear-gradient(to bottom,transparent 8%,#000 34%);mask-image:linear-gradient(to bottom,transparent 8%,#000 34%)}
 @media(max-width:1000px){.gcard.pil{aspect-ratio:4/6.1;max-width:400px}}
 @media(max-width:1000px){.gcard.pil{aspect-ratio:4/6.6}.gcard.pil::before{-webkit-mask-image:linear-gradient(to bottom,transparent 14%,#000 44%);mask-image:linear-gradient(to bottom,transparent 14%,#000 44%)}}
+
+/* ====== PILARES v2: la imagen cubre toda la tarjeta (más baja) y el texto va ENCIMA ====== */
+.gcard.pil{aspect-ratio:auto!important;min-height:340px;justify-content:center;max-width:none}
+.gcard.pil::before{inset:0;background-size:cover;background-position:center 62%;opacity:.5;-webkit-mask-image:none;mask-image:none}
+.gcard.pil::after{background:linear-gradient(135deg,rgba(14,14,16,.78) 0%,rgba(14,14,16,.5) 55%,rgba(14,14,16,.62) 100%)}
+.gcard.pil h3,.gcard.pil p,.gcard.pil>b{position:relative;z-index:1;text-shadow:0 2px 14px rgba(0,0,0,.75)}
+.gcard.pil p{color:#ece7da}
+@media(max-width:1000px){.gcard.pil{min-height:300px;max-width:420px;width:100%;margin-inline:auto}.gcard.pil::before{background-position:center 58%}}
+.gcard.pil{justify-content:flex-start;padding-top:clamp(26px,3vw,34px)}
+.gcard.pil::before{opacity:.62}
+.gcard.pil::after{background:linear-gradient(160deg,rgba(14,14,16,.82) 0%,rgba(14,14,16,.55) 50%,rgba(14,14,16,.4) 100%)}
+.gcard.pil>b{background-image:linear-gradient(100deg,#e8c961,#f5d97b 50%,#d4b038)}
