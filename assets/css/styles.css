@@ -203,7 +203,7 @@ details[open]{border-color:#d4b038}.arrows button:hover,.pain-grid li:hover,.sca
 .evcard-img{aspect-ratio:1711/919}.evcard-img::after,.evcard-img::before{display:none}
 /* móvil: la foto va arriba con Hugo y Mónica centrados y el texto empieza debajo */
 @media(max-width:560px){
- .hero[style*="--img"]{background-size:auto 117vw,cover,cover;background-position:-109vw 64px,center,center;background-repeat:no-repeat;min-height:0;padding-top:calc(64px + 98vw);padding-bottom:48px}
+ .hero[style*="--img"]{background-size:auto 117vw,cover,cover;background-position:-107vw 64px,center,center;background-repeat:no-repeat;min-height:0;padding-top:calc(64px + 98vw);padding-bottom:48px}
  .hero[style*="--img"]::after{background:linear-gradient(to top,rgba(0,0,0,.96) 42%,rgba(0,0,0,.55) 58%,rgba(0,0,0,0) 74%)}
 }
 
