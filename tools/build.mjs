@@ -70,7 +70,7 @@ const wrap = (l, p, main, extraHead = "") => {
 // ---------- helpers de diseño ----------
 const SLOTS = {}; // se llena al usar pic(): alimenta docs/prompts-fondos.md
 // Las variables CSS con url() se resuelven desde assets/css/, por eso la ruta es ../img/ para ES y EN.
-const picUrl = (l, name) => "../img/" + name;
+const picUrl = (l, name) => "../img/" + name + "?v=" + ver("assets/img/" + name);
 const has = (name) => fs.existsSync(path.join(root, "assets/img", name));
 const pic = (l, name, desc) => { SLOTS[name] = desc; return has(name) ? `style="--img:url(${picUrl(l, name)})"` : ""; };
 const picBg = (l, name, fallback, desc, pos = "center") => { SLOTS[name] = desc; const n = has(name) ? name : (has(fallback) ? fallback : null); return n ? `style="--img:url(${picUrl(l, n)});--pos:${pos}"` : ""; };
