@@ -259,3 +259,13 @@ details[open]{border-color:#d4b038}.arrows button:hover,.pain-grid li:hover,.sca
 @media(max-width:400px){.btn .ar{display:none}}
 /* testimonios: los videos son horizontales 16:9 */
 .vid.round{aspect-ratio:16/9}.vcard{flex:0 0 clamp(280px,30vw,380px)}.grid4{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+
+/* retratos de los mentores: formato 4:5, sin velo */
+.mph::after{display:none}.mcard .mph::before{display:none!important}
+.mentors{grid-template-columns:1fr;gap:18px}
+.mcard{flex-direction:row;align-items:stretch}
+.mcard .mph{flex:0 0 min(38%,380px);aspect-ratio:4/5;border-radius:0;background-position:center top}
+.mcard>div:last-child{display:flex;flex-direction:column;justify-content:center;padding:clamp(24px,3.5vw,48px)}
+.mcard>div:last-child p{font-size:15.5px}
+.pcard2 .mph{background-position:center top}
+@media(max-width:1000px){.mcard{flex-direction:column}.mcard .mph{flex:none;width:100%;max-width:380px;margin-inline:auto;border-radius:var(--r) var(--r) 0 0}.mcard>div:last-child{align-items:center}}
