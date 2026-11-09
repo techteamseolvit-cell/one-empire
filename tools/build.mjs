@@ -123,7 +123,7 @@ function home(l) {
  <div class="reveal">${video(l, "hugo-potros.mp4", c.proof.video, "frame")}</div></div></section>
 
 <section class="s-conc"><div class="wrap">${head2(c.pillars.label, c.pillars.h2, "", true)}
- <div class="cards3">${c.pillars.items.map(([t, d], i) => `<article class="gcard reveal"><b>${num(i)}</b><h3>${esc(t)}</h3><p>${esc(d[0].toUpperCase() + d.slice(1))}</p></article>`).join("")}</div></div></section>
+ <div class="cards3">${c.pillars.items.map(([t, d], i) => `<article class="gcard pil reveal" ${pic(l, "pilar-" + ["marketing", "ventas", "operaciones"][i] + ".jpg", "Imagen del pilar " + t + ", vertical 4:5")}><b>${num(i)}</b><h3>${esc(t)}</h3><p>${esc(d[0].toUpperCase() + d.slice(1))}</p></article>`).join("")}</div></div></section>
 
 <section class="s-char"><div class="wrap">
  ${head2(c.programs.label, c.programs.h2, `<p class="lead muted">${esc(c.programs.intro)}</p>`)}

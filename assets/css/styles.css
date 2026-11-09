@@ -368,3 +368,18 @@ details[open]{border-color:#d4b038}.arrows button:hover,.pain-grid li:hover,.sca
 }
 /* botones largos: nunca se desbordan; si no caben, pasan a dos líneas centradas */
 @media(max-width:400px){.btn{white-space:normal;line-height:1.35;text-align:center;justify-content:center}}
+
+/* ====== PILARES: imagen de fondo a baja opacidad, texto arriba sobre la zona libre ====== */
+.gcard.pil{aspect-ratio:4/5;justify-content:flex-start;overflow:hidden;isolation:isolate}
+.gcard.pil::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--img) center bottom/cover no-repeat;opacity:.62;
+ -webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 38%);mask-image:linear-gradient(to bottom,transparent 0%,#000 38%)}
+.gcard.pil::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(to bottom,rgba(15,15,17,.55) 0%,rgba(15,15,17,.15) 55%,rgba(15,15,17,.35) 100%)}
+.gcard.pil h3{min-height:0;margin-top:12px}.gcard.pil p{flex:0}
+@media(max-width:1000px){.gcard.pil{aspect-ratio:4/5;max-width:420px;width:100%;margin-inline:auto}}
+.gcard.pil{aspect-ratio:4/5.5}
+.gcard.pil::before{background-size:88% auto;background-position:center bottom;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 22%);mask-image:linear-gradient(to bottom,transparent 0%,#000 22%)}
+@media(max-width:1000px){.gcard.pil{aspect-ratio:4/5.4;max-width:400px}}
+/* imagen a todo el ancho de la tarjeta y fundida hacia arriba (sin borde de recuadro) */
+.gcard.pil::before{background-size:100% auto;background-position:center bottom;opacity:.7;-webkit-mask-image:linear-gradient(to bottom,transparent 8%,#000 34%);mask-image:linear-gradient(to bottom,transparent 8%,#000 34%)}
+@media(max-width:1000px){.gcard.pil{aspect-ratio:4/6.1;max-width:400px}}
+@media(max-width:1000px){.gcard.pil{aspect-ratio:4/6.6}.gcard.pil::before{-webkit-mask-image:linear-gradient(to bottom,transparent 14%,#000 44%);mask-image:linear-gradient(to bottom,transparent 14%,#000 44%)}}
