@@ -41,6 +41,19 @@
     }, { threshold: 0.6 }).observe(el);
   });
 
+  // videos: botón de play dorado grande; al reproducir aparecen los controles nativos
+  document.querySelectorAll(".vid video").forEach(function (v) {
+    var box = v.parentElement, btn = box.querySelector(".vplay");
+    if (!btn) return;
+    btn.addEventListener("click", function () { v.controls = true; v.play(); });
+    v.addEventListener("play", function () {
+      box.classList.add("playing");
+      document.querySelectorAll(".vid video").forEach(function (o) { if (o !== v) o.pause(); });
+    });
+    v.addEventListener("pause", function () { if (!v.ended && v.currentTime > 0) return; box.classList.remove("playing"); });
+    v.addEventListener("ended", function () { box.classList.remove("playing"); v.controls = false; });
+  });
+
   // calendario de citas (Google Calendar)
   var cal = $("#calendar");
   if (cal) {

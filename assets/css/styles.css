@@ -299,3 +299,18 @@ details[open]{border-color:#d4b038}.arrows button:hover,.pain-grid li:hover,.sca
 @media(max-width:800px){.phero[style*="--img"]{--pos:72% center}.phero[style*="--img"]::after{background:linear-gradient(to top,rgba(0,0,0,.6),rgba(0,0,0,.25))}}
 .phero{display:flex;align-items:center;min-height:clamp(330px,38vw,540px);padding-top:110px;padding-bottom:50px}.phero>.wrap{width:100%}
 @media(max-width:800px){.phero{min-height:360px;padding-top:100px}}
+
+/* botón de play dorado (símbolo negro) sobre los videos */
+.vplay{position:absolute;inset:0;z-index:2;display:grid;place-items:center;border:0;background:linear-gradient(to top,rgba(0,0,0,.35),rgba(0,0,0,.05) 60%);cursor:pointer;transition:opacity .3s}
+.vplay .play{width:76px;height:76px;background:var(--grad);box-shadow:0 0 0 10px rgba(212,176,56,.22),0 10px 30px rgba(0,0,0,.5);animation:pulse 2.4s ease-in-out infinite}
+.vplay .play svg{width:30px;height:30px;fill:#000;margin-left:4px}
+.vplay:hover .play,.vplay:focus-visible .play{transform:scale(1.1)}
+.vid.playing .vplay{opacity:0;pointer-events:none}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 10px rgba(212,176,56,.22),0 10px 30px rgba(0,0,0,.5)}50%{box-shadow:0 0 0 18px rgba(212,176,56,.08),0 10px 30px rgba(0,0,0,.5)}}
+@media(prefers-reduced-motion:reduce){.vplay .play{animation:none}}
+@media(max-width:480px){.vplay .play{width:64px;height:64px}.vplay .play svg{width:26px;height:26px}}
+.vid.ph .play{width:76px;height:76px}.vid.ph .play svg{fill:#000;width:30px;height:30px}
+/* el play va en la zona inferior para no tapar la cara de la persona */
+.vid.round .vplay{place-items:end center;padding-bottom:22px}
+.vid.round .vplay .play{width:60px;height:60px}.vid.round .vplay .play svg{width:24px;height:24px}
+.vid.frame .vplay,.vid.wide .vplay{place-items:center;padding-bottom:0}

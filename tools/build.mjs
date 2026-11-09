@@ -84,7 +84,7 @@ function video(l, file, label, cls = "") {
   const up = l === "en" ? "../" : "";
   const poster = file.replace(/\.mp4$/, ".jpg");
   return hasVideo(file)
-    ? `<div class="vid ${cls}"><video src="${up}assets/video/${esc(file)}"${hasVideo(poster) ? ` poster="${up}assets/video/${esc(poster)}"` : ""} controls playsinline preload="none"></video></div>`
+    ? `<div class="vid ${cls}"><video src="${up}assets/video/${esc(file)}"${hasVideo(poster) ? ` poster="${up}assets/video/${esc(poster)}"` : ""} playsinline preload="none"></video><button class="vplay" type="button" aria-label="${l === "en" ? "Play video" : "Reproducir video"}">${playBtn}</button></div>`
     : `<div class="vid ${cls} ph">${playBtn}<small>${esc(label)}</small></div>`;
 }
 const head2 = (eyebrow, h, extra = "", center = false) => `<div class="sec-head${center ? " c" : ""} reveal">${eyebrow ? `<span class="eyebrow">${esc(eyebrow)}</span>` : ""}<h2>${tt(h)}</h2>${extra}</div>`;
