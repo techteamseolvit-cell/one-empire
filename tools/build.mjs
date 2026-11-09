@@ -27,7 +27,7 @@ function head(l, p, extra = "") {
 <meta name="twitter:card" content="summary_large_image"><meta name="theme-color" content="#050505">
 <link rel="icon" href="${up}assets/img/one-empire-isotipo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Cormorant+Garamond:ital,wght@0,500;1,500;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="${up}assets/css/styles.css">${extra}</head>`;
 }
 
@@ -37,7 +37,7 @@ function chrome(l, p) {
   const otherHref = (l === "es" ? "en/" : "../") + slug(o, p);
   const drop = (label, key, items, anchors) => `<div class="dd"><a href="${href(key)}">${label}<i></i></a><div class="dd-menu">${items.map((t, i) => `<a href="${href(key)}${anchors ? "#" + anchors[i] : ""}">${esc(t)}</a>`).join("")}</div></div>`;
   const header = `<header id="site-header"><div class="bar">
-<a class="brand" href="${href("home")}" aria-label="ONE EMPIRE"><img src="${up}assets/img/one-empire-isotipo.png" alt="ONE EMPIRE" width="44" height="34"><span>ONE EMPIRE</span></a>
+<a class="brand" href="${href("home")}" aria-label="ONE EMPIRE"><img src="${up}assets/img/one-empire-logo.png" alt="ONE EMPIRE" width="104" height="46"></a>
 <nav class="nav" id="nav"><a href="${href("home")}"${p === "home" ? ' aria-current="page"' : ""}>${n.home}</a>
 ${drop(n.programs, "programs", n.progItems, n.progItems.map((_, i) => "p" + (i + 1)))}
 <div class="dd"><a href="${href("events")}">${n.events}<i></i></a><div class="dd-menu"><b>${n.online}</b>${n.online_items.map((t) => `<a href="${href("events")}#online">${esc(t)}</a>`).join("")}<b>${n.inperson}</b>${n.inperson_items.map((t) => `<a href="${href("events")}#presencial">${esc(t)}</a>`).join("")}</div></div>
@@ -57,85 +57,100 @@ ${drop(n.programs, "programs", n.progItems, n.progItems.map((_, i) => "p" + (i +
 
 const wrap = (l, p, main, extraHead = "") => {
   const { header, footer } = chrome(l, p), up = l === "en" ? "../" : "";
-  return `${head(l, p, extraHead)}<body data-page="${p}"><div class="grain" aria-hidden="true"></div><div class="glow" aria-hidden="true"></div>${header}<main>${main}</main>${footer}
+  return `${head(l, p, extraHead)}<body data-page="${p}">${header}<main>${main}</main>${footer}
 <script>window.ONE_EMPIRE=${JSON.stringify({ lang: l })}</script><script src="${up}assets/js/config.js"></script><script src="${up}assets/js/main.js"></script></body></html>`;
 };
 
-const bg = (name) => `style="--img:url(${name})"`;
-const split = (s) => s.replace(/\n/g, "<br>");
+
+// ---------- helpers de diseño ----------
+const SLOTS = {}; // se llena al usar pic(): alimenta docs/prompts-fondos.md
+const picUrl = (l, name) => (l === "en" ? "../" : "") + "assets/img/" + name;
+const has = (name) => fs.existsSync(path.join(root, "assets/img", name));
+const pic = (l, name, desc) => { SLOTS[name] = desc; return has(name) ? `style="--img:url(${picUrl(l, name)})"` : ""; };
+const tt = (s) => { const w = s.split(" "); const n = Math.min(4, Math.max(1, Math.ceil(w.length / 3))); return `${esc(w.slice(0, -n).join(" "))} <span class="a">${esc(w.slice(-n).join(" "))}</span>`; };
 const btn = (t, h, cls = "") => `<a class="btn ${cls}" href="${h}">${esc(t)}</a>`;
 const num = (i) => String(i + 1).padStart(2, "0");
+const arrow = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>`;
 const playBtn = `<span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>`;
-
+const arrows = (id) => `<div class="arrows"><button data-dir="-1" data-for="${id}" aria-label="Prev">‹</button><button data-dir="1" data-for="${id}" aria-label="Next">›</button></div>`;
 function video(file, label, cls = "") {
   return hasVideo(file)
-    ? `<div class="vid ${cls}"><video src="${esc(file)}" controls playsinline preload="none"></video></div>`
+    ? `<div class="vid ${cls}"><video src="assets/video/${esc(file)}" controls playsinline preload="none"></video></div>`
     : `<div class="vid ${cls} ph">${playBtn}<small>${esc(label)}</small></div>`;
 }
+const head2 = (eyebrow, h, extra = "", center = false) => `<div class="sec-head${center ? " c" : ""} reveal">${eyebrow ? `<span class="eyebrow">${esc(eyebrow)}</span>` : ""}<h2>${tt(h)}</h2>${extra}</div>`;
 
 function home(l) {
-  const c = C[l], up = l === "en" ? "../" : "", H = (k) => slug(l, k), s = SEO[l].home;
-  const img = (n) => `${up}assets/img/${n}`;
-  const cred = [...c.cred, ...c.cred].map((t) => `<span>${esc(t)}</span><i></i>`).join("");
+  const c = C[l], H = (k) => slug(l, k), s = SEO[l].home;
+  const credHtml = c.cred.map((t) => {
+    let m = t.match(/^(.*?\+)\s+(.*)$/);
+    if (!m) { const g = t.match(/GOLD/); m = g ? ["", "GOLD", t.replace("GOLD", "").replace(/\s+/g, " ").trim()] : ["", t, ""]; }
+    return `<div><b>${esc(m[1])}</b><span>${esc(m[2])}</span></div>`;
+  }).join("");
+  const pillarDesc = ["Marketing", "Ventas", "Operaciones"];
   return `
-<section class="hero media" ${bg(img(s.img))} role="img" aria-label="${esc(c.hero.alt)}">
- <div class="hero-in"><span class="eyebrow">${esc(c.hero.eyebrow)}</span>
- <h1 class="mega">${esc(c.hero.h1).replace(/#1/, '<em class="gold">#1</em>')}</h1>
- <p class="lead">${esc(c.hero.sub)}</p>
- <div class="row">${btn(c.hero.b1, H("book"), "btn-solid")}${btn(c.hero.b2, H("programs"))}</div>
- <p class="proof">${esc(c.hero.proof)}</p></div><span class="scroll-cue" aria-hidden="true"></span>
-</section>
-<div class="marquee" aria-label="${esc(c.cred.join(" · "))}"><div class="track">${cred}</div></div>
+<section class="hero photo" ${pic(l, s.img, "Foto principal: Hugo y Mónica juntos")} role="img" aria-label="${esc(c.hero.alt)}">
+ <div class="wrap hero-in"><h1>${tt(c.hero.h1)}</h1><p class="lead">${esc(c.hero.eyebrow)}. ${esc(c.hero.sub)}</p>
+ <div class="row">${btn(c.hero.b1, H("book"), "btn-gold")}${btn(c.hero.b2, H("programs"), "btn-ghost")}</div>
+ <p class="proof">${esc(c.hero.proof)}</p></div></section>
 
-<section class="event"><div class="split reveal"><div><span class="eyebrow">${esc(c.event.label)}</span><h2 class="big">${esc(c.event.h2)}</h2></div>
- <div class="ticket"><small>${esc(c.event.tag)}</small><p>${esc(c.event.line)}</p><strong>${esc(c.event.when)}</strong>${btn(c.event.btn, H("events") + "#presencial", "btn-solid")}</div></div></section>
+<div class="statband"><div class="wrap stats3">${credHtml}</div></div>
 
-<section class="pain"><div class="pain-grid"><div class="sticky reveal"><h2 class="big">${esc(c.pain.h2)}</h2><p class="lead muted">${esc(c.pain.intro)}</p></div>
- <ol class="pain-list">${c.pain.items.map((t, i) => `<li class="reveal"><b>${num(i)}</b><span>${esc(t)}</span></li>`).join("")}</ol></div></section>
+<section class="s-dark"><div class="wrap">
+ <div class="sec-head reveal row-head"><div><span class="eyebrow">${esc(c.event.label)}</span><h2>${tt(c.event.h2)}</h2></div><a class="more" href="${H("events")}">${esc(c.nav.events)} ${arrow}</a></div>
+ <article class="evcard reveal"><div class="evcard-img photo" ${pic(l, "evento-next-level-leaders.jpg", "Flyer/foto del próximo evento presencial (Next Level Leaders), horizontal 16:7")}></div>
+  <div class="evcard-body"><span class="pill">${esc(c.event.tag)}</span><h3>Next Level Leaders</h3><p>${esc(c.event.line)}</p><p class="meta">${esc(c.event.when)}</p>${btn(c.event.btn, H("events") + "#presencial", "btn-gold btn-sm")}</div></article></div></section>
 
-<section class="reality"><div class="reveal"><h2 class="big center">${esc(c.reality.h2)}</h2>
- <div class="cols">${c.reality.p.map((t) => `<p>${esc(t)}</p>`).join("")}</div>
- <blockquote class="quote gold-text">${esc(c.reality.quote)}</blockquote></div></section>
+<section class="s-char bg-grid"><div class="wrap">${head2("", c.pain.h2, `<p class="lead muted">${esc(c.pain.intro)}</p>`)}
+ <ol class="pain-grid">${c.pain.items.map((t, i) => `<li class="reveal"><b>${num(i)}</b><span>${esc(t)}</span></li>`).join("")}</ol></div></section>
 
-<section class="proof-sec"><div class="split"><div class="reveal"><span class="six gold-text" aria-hidden="true">6×</span><h2 class="big">${esc(c.proof.h2)}</h2>${c.proof.p.map((t) => `<p class="lead">${esc(t)}</p>`).join("")}${btn(c.proof.btn, H("book"), "btn-solid")}</div>
- <div class="reveal">${video("hugo-potros.mp4", c.proof.video, "tall")}</div></div></section>
+<section class="s-cream"><div class="wrap narrow2">
+ <div class="sec-head c reveal"><h2>${tt(c.reality.h2)}</h2></div>
+ <div class="cols reveal">${c.reality.p.map((t) => `<p>${esc(t)}</p>`).join("")}</div>
+ <p class="bigquote reveal">${esc(c.reality.quote)}</p></div></section>
 
-<section class="pillars"><div class="reveal"><span class="eyebrow">${esc(c.pillars.label)}</span><h2 class="big">${esc(c.pillars.h2)}</h2></div>
- <div class="pillar-grid">${c.pillars.items.map(([t, d], i) => `<article class="pillar reveal"><b class="gold-text">${num(i)}</b><h3>${esc(t)}</h3><p>${esc(d[0].toUpperCase() + d.slice(1))}</p></article>`).join("")}</div></section>
+<section class="s-dark"><div class="wrap split">
+ <div class="reveal"><h2 class="h2">${tt(c.proof.h2)}</h2>${c.proof.p.map((t) => `<p>${esc(t)}</p>`).join("")}<div class="row">${btn(c.proof.btn, H("book"), "btn-gold")}</div></div>
+ <div class="reveal">${video("hugo-potros.mp4", c.proof.video, "frame")}</div></div></section>
 
-<section class="programs" id="programs-home"><div class="reveal"><span class="eyebrow">${esc(c.programs.label)}</span><h2 class="big">${esc(c.programs.h2)}</h2><p class="lead muted">${esc(c.programs.intro)}</p></div>
- <div class="prog">${c.programs.cards.map(([tag, name, line], i) => `<a class="prog-row reveal${i === 1 ? " flagship" : ""}" href="${H("programs")}#p${i + 1}"><span class="tag">${esc(tag)}</span><h3>${esc(name)}</h3><p>${esc(line)}</p><span class="go">${esc(c.programs.btn)} →</span></a>`).join("")}</div>
- <p class="quote gold-text reveal">${esc(c.programs.quote)}</p></section>
+<section class="s-char bg-glow"><div class="wrap">${head2(c.pillars.label, c.pillars.h2, "", true)}
+ <div class="cards3">${c.pillars.items.map(([t, d], i) => `<article class="pcard photo reveal" ${pic(l, "pilar-" + ["marketing", "ventas", "operaciones"][i] + ".jpg", "Portada del pilar " + t + ", vertical 4:5")}><div><b>${num(i)}</b><h3>${esc(t)}</h3><p>${esc(d[0].toUpperCase() + d.slice(1))}</p></div></article>`).join("")}</div></div></section>
 
-<section class="testi"><div class="reveal"><h2 class="big">${esc(c.testi.h2)}</h2><p class="lead muted">${esc(c.testi.intro)}</p></div>
- <div class="rail">${c.testi.items.map((t) => `<article class="vcard">${video(t.file, t.name)}<div class="vmeta"><h3>${esc(t.name)}</h3><small>${esc(t.meta)}</small><strong class="gold-text">${esc(t.res)}</strong></div></article>`).join("")}</div>
- <div class="center">${btn(c.testi.btn, H("results"))}</div></section>
+<section class="s-dark"><div class="wrap">
+ <div class="sec-head reveal row-head"><div><span class="eyebrow">${esc(c.programs.label)}</span><h2>${tt(c.programs.h2)}</h2><p class="lead muted">${esc(c.programs.intro)}</p></div>${arrows("rail-prog")}</div>
+ <div class="rail" id="rail-prog">${c.programs.cards.map(([tag, name, line], i) => `<a class="prcard photo${i === 1 ? " flag" : ""}" href="${H("programs")}#p${i + 1}" ${pic(l, "programa-" + ["one", "elite-builders", "elite-closers", "prime-3d"][i] + ".jpg", "Portada del programa " + name + ", vertical 4:5")}><span class="pill">${esc(tag)}</span><div><h3>${esc(name)}</h3><p>${esc(line)}</p><span class="go">${esc(c.programs.btn)} ${arrow}</span></div></a>`).join("")}</div>
+ <p class="bigquote gold reveal">${esc(c.programs.quote)}</p></div></section>
 
-<section class="mentors"><div class="reveal"><h2 class="big">${esc(c.mentors.h2)}</h2><p class="lead muted">${esc(c.mentors.intro)}</p></div>
- <div class="mentor-grid"><article class="mentor big-m reveal"><div class="portrait" ${bg(img("hugo-perez-mentor-empresas-construccion.jpg"))} role="img" aria-label="Hugo Pérez, mentor de empresas de construcción"></div><h3>${esc(c.mentors.hugo[0])}</h3><p>${esc(c.mentors.hugo[1])}</p></article>
- <article class="mentor reveal"><div class="portrait" ${bg(img("monica-tuccella-seolvit-marketing-contratistas.jpg"))} role="img" aria-label="Mónica Tuccella, fundadora de SEOLVIT"></div><h3>${esc(c.mentors.monica[0])}</h3><p>${esc(c.mentors.monica[1])}</p></article></div>
- <p class="quote gold-text reveal">${esc(c.mentors.quote)}</p>
- <div class="stats reveal">${c.mentors.stats.map(([n, t]) => `<div><b class="gold-text" data-count="${esc(n)}">${esc(n)}</b><span>${esc(t)}</span></div>`).join("")}</div>
- <div class="center">${btn(c.mentors.btn, H("about"))}</div></section>
+<section class="s-char"><div class="wrap">
+ <div class="sec-head reveal row-head"><div><h2>${tt(c.testi.h2)}</h2><p class="lead muted">${esc(c.testi.intro)}</p></div>${arrows("rail-testi")}</div>
+ <div class="rail" id="rail-testi">${c.testi.items.map((t) => `<article class="vcard">${video(t.file, t.name, "round")}<div class="vmeta"><h3>${esc(t.name)}</h3><small>${esc(t.meta)}</small><strong>${esc(t.res)}</strong></div></article>`).join("")}</div>
+ <div class="row c-row">${btn(c.testi.btn, H("results"), "btn-ghost")}</div></div></section>
 
-<section class="events-home"><div class="reveal"><span class="eyebrow">${esc(c.events.label)}</span><h2 class="big">${esc(c.events.h2)}</h2></div>
- <div class="ev-grid">${c.events.items.map(([t, d, b, a], i) => `<a class="ev media reveal" ${bg(img(i ? "evento-online-contratistas.jpg" : "evento-presencial-contratistas.jpg"))} href="${H("events")}#${a}"><div><h3>${esc(t)}</h3><p>${esc(d)}</p><span class="go">${esc(b)} →</span></div></a>`).join("")}</div></section>
+<section class="s-dark"><div class="wrap">${head2("", c.mentors.h2, `<p class="lead muted">${esc(c.mentors.intro)}</p>`)}
+ <div class="mentors"><article class="mcard big reveal"><div class="mph photo" ${pic(l, "hugo-perez.jpg", "Retrato de Hugo Pérez, 1:1")}></div><div><h3>${esc(c.mentors.hugo[0])}</h3><p>${esc(c.mentors.hugo[1])}</p></div></article>
+ <article class="mcard reveal"><div class="mph photo" ${pic(l, "monica-tuccella.jpg", "Retrato de Mónica Tuccella, 1:1")}></div><div><h3>${esc(c.mentors.monica[0])}</h3><p>${esc(c.mentors.monica[1])}</p></div></article></div>
+ <p class="bigquote gold reveal">${esc(c.mentors.quote)}</p></div></section>
+<div class="statband"><div class="wrap stats4">${c.mentors.stats.map(([n, t]) => `<div><b data-count="${esc(n)}">${esc(n)}</b><span>${esc(t)}</span></div>`).join("")}</div></div>
+<div class="s-dark tight"><div class="wrap"><div class="row c-row">${btn(c.mentors.btn, H("about"), "btn-ghost")}</div></div></div>
 
-<section class="free"><div class="free-in reveal"><div><h2 class="big dark">${esc(c.free.h2)}</h2><p>${esc(c.free.p)}</p></div>${btn(c.free.btn, "#", "btn-dark")}</div></section>
+<section class="s-dark bg-grid"><div class="wrap">${head2(c.events.label, c.events.h2, "", true)}
+ <div class="cards2">${c.events.items.map(([t, d, b, a], i) => `<a class="ecard photo reveal" href="${H("events")}#${a}" ${pic(l, i ? "evento-online.jpg" : "evento-presencial.jpg", "Portada eventos " + (i ? "online" : "presenciales") + ", horizontal 16:10")}><div><span class="pill">${esc(t.split(" · ")[0])}</span><h3>${esc(t.split(" · ")[1] || t)}</h3><p>${esc(d)}</p><span class="go">${esc(b)} ${arrow}</span></div></a>`).join("")}</div></div></section>
 
-<section class="fit"><div class="reveal"><h2 class="big">${esc(c.fit.h2)}</h2><p class="lead muted">${esc(c.fit.intro)}</p></div>
- <div class="fit-grid"><div class="yes reveal"><h3>${esc(c.fit.yes)}</h3><ul>${c.fit.yesItems.map((t) => `<li>${esc(t)}</li>`).join("")}</ul></div>
- <div class="no reveal"><h3>${esc(c.fit.no)}</h3><ul>${c.fit.noItems.map((t) => `<li>${esc(t)}</li>`).join("")}</ul></div></div></section>
+<section class="s-dark tight"><div class="wrap"><div class="freecard reveal"><div><h2>${esc(c.free.h2)}</h2><p>${esc(c.free.p)}</p></div>${btn(c.free.btn, "#", "btn-black")}</div></div></section>
 
-<section class="steps"><div class="reveal"><h2 class="big">${esc(c.steps.h2)}</h2></div>
- <div class="step-grid">${c.steps.items.map(([t, d], i) => `<article class="step reveal"><b class="gold-text">${i + 1}</b><h3>${esc(t)}</h3><p>${esc(d)}</p></article>`).join("")}</div>
- <div class="center">${btn(c.steps.btn, H("book"), "btn-solid")}</div></section>
+<section class="s-cream"><div class="wrap">${head2("", c.fit.h2, `<p class="lead">${esc(c.fit.intro)}</p>`)}
+ <div class="cards2"><div class="fitcard yes reveal"><h3>${esc(c.fit.yes)}</h3><ul>${c.fit.yesItems.map((t) => `<li>${esc(t)}</li>`).join("")}</ul></div>
+ <div class="fitcard no reveal"><h3>${esc(c.fit.no)}</h3><ul>${c.fit.noItems.map((t) => `<li>${esc(t)}</li>`).join("")}</ul></div></div></div></section>
 
-<section class="faq"><div class="reveal"><h2 class="big">${esc(c.faq.h2)}</h2></div>
- <div class="faq-list">${c.faq.items.map(([q, a]) => `<details class="reveal"><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join("")}</div></section>
+<section class="s-char"><div class="wrap">${head2("", c.steps.h2, "", true)}
+ <div class="cards3">${c.steps.items.map(([t, d], i) => `<article class="scard reveal"><b>${i + 1}</b><h3>${esc(t)}</h3><p>${esc(d)}</p></article>`).join("")}</div>
+ <div class="row c-row">${btn(c.steps.btn, H("book"), "btn-gold")}</div></div></section>
 
-<section class="closing media" ${bg(img("cierre-imperio-contratista.jpg"))}><div class="reveal center"><h2 class="mega">${esc(c.close.h2)}</h2><p class="lead">${esc(c.close.sub)}</p><p class="muted narrow">${esc(c.close.p)}</p>
- <div class="row center-row">${btn(c.close.b1, H("book"), "btn-solid")}${btn(c.close.b2, WHATSAPP)}</div></div></section>`;
+<section class="s-dark"><div class="wrap narrow2">${head2("", c.faq.h2, "", true)}
+ <div class="faq">${c.faq.items.map(([q, a]) => `<details class="reveal"><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join("")}</div></div></section>
+
+<section class="closing photo" ${pic(l, "bg-cierre.jpg", "Fondo del cierre: ambiente de evento/obra, cálido y desenfocado, horizontal 16:9")}><div class="wrap reveal"><h2>${tt(c.close.h2)}</h2><p class="lead">${esc(c.close.sub)}</p><p class="soft">${esc(c.close.p)}</p>
+ <div class="row c-row">${btn(c.close.b1, H("book"), "btn-gold")}${btn(c.close.b2, WHATSAPP, "btn-ghost")}</div></div></section>`;
 }
 
 function homeSchema(l) {
@@ -145,40 +160,37 @@ function homeSchema(l) {
   return `<script type="application/ld+json">${JSON.stringify([org, faq])}</script>`;
 }
 
-const pageHero = (l, p, h1, sub) => {
-  const up = l === "en" ? "../" : "", s = SEO[l][p];
-  return `<section class="page-hero media" ${bg(`${up}assets/img/${s.img}`)}><div class="reveal"><span class="eyebrow">ONE EMPIRE</span><h1 class="mega">${esc(h1)}</h1><p class="lead">${esc(sub)}</p></div></section>`;
-};
+const pageHero = (l, p, h1, sub) => `<section class="phero photo bg-grid" ${pic(l, SEO[l][p].img, "Fondo de cabecera de la página " + p + ", horizontal 16:7")}><div class="wrap reveal"><h1>${tt(h1)}</h1><p class="lead">${esc(sub)}</p></div></section>`;
 
 function about(l) {
-  const c = C[l], a = c.about, H = (k) => slug(l, k);
-  return `${pageHero(l, "about", a.h1, a.sub)}<section class="story"><div class="story-in">${a.p.map((t, i) => `<p class="${i === 0 ? "dropcap " : ""}reveal">${esc(t)}</p>`).join("")}<div class="center">${btn(a.btn, H("book"), "btn-solid")}</div></div></section>`;
+  const a = C[l].about, H = (k) => slug(l, k);
+  return `${pageHero(l, "about", a.h1, a.sub)}<section class="s-dark"><div class="wrap story">${a.p.map((t, i) => `<p class="${i === 0 ? "dropcap " : ""}reveal">${esc(t)}</p>`).join("")}<div class="row">${btn(a.btn, H("book"), "btn-gold")}</div></div></section>`;
 }
 function programs(l) {
   const c = C[l], pg = c.pages.programs, H = (k) => slug(l, k);
-  return `${pageHero(l, "programs", pg.h1, pg.sub)}<section class="programs"><div class="prog">${c.programs.cards.map(([tag, name, line], i) => `<article class="prog-row reveal${i === 1 ? " flagship" : ""}" id="p${i + 1}"><span class="tag">${esc(tag)}</span><h3>${esc(name)}</h3><p>${esc(line)}</p>${btn(c.hero.b1, H("book"))}</article>`).join("")}</div><p class="quote gold-text reveal">${esc(c.programs.quote)}</p></section>`;
+  return `${pageHero(l, "programs", pg.h1, pg.sub)}<section class="s-dark"><div class="wrap"><div class="cards2">${c.programs.cards.map(([tag, name, line], i) => `<article class="prcard photo reveal${i === 1 ? " flag" : ""}" id="p${i + 1}" ${pic(l, "programa-" + ["one", "elite-builders", "elite-closers", "prime-3d"][i] + ".jpg", "Portada del programa " + name + ", vertical 4:5")}><span class="pill">${esc(tag)}</span><div><h3>${esc(name)}</h3><p>${esc(line)}</p>${btn(c.hero.b1, H("book"), "btn-gold btn-sm")}</div></article>`).join("")}</div><p class="bigquote gold reveal">${esc(c.programs.quote)}</p></div></section>`;
 }
 function events(l) {
   const c = C[l], pg = c.pages.events, H = (k) => slug(l, k);
-  const grp = (id, title, items) => `<div class="ev-group reveal" id="${id}"><h2 class="big">${esc(title)}</h2><div class="prog">${items.map((t) => `<div class="prog-row"><h3>${esc(t)}</h3><p>${esc(pg.soon)}</p>${btn(c.event.btn, H("book"), "btn-solid")}</div>`).join("")}</div></div>`;
-  return `${pageHero(l, "events", pg.h1, pg.sub)}<section>${grp("presencial", pg.inperson, c.nav.inperson_items)}${grp("online", pg.online, c.nav.online_items)}</section>`;
+  const grp = (id, title, items) => `<div class="ev-group" id="${id}"><h2 class="h2 reveal">${tt(title)}</h2><div class="cards3">${items.map((t) => `<article class="evcard2 reveal"><span class="pill">${esc(title)}</span><h3>${esc(t)}</h3><p class="muted">${esc(pg.soon)}</p>${btn(c.event.btn, H("book"), "btn-gold btn-sm")}</article>`).join("")}</div></div>`;
+  return `${pageHero(l, "events", pg.h1, pg.sub)}<section class="s-dark"><div class="wrap">${grp("presencial", pg.inperson, c.nav.inperson_items)}${grp("online", pg.online, c.nav.online_items)}</div></section>`;
 }
 function results(l) {
   const c = C[l], pg = c.pages.results, H = (k) => slug(l, k);
-  return `${pageHero(l, "results", pg.h1, pg.sub)}<section class="testi"><div class="rail wrap">${c.testi.items.map((t) => `<article class="vcard">${video(t.file, t.name)}<div class="vmeta"><h3>${esc(t.name)}</h3><small>${esc(t.meta)}</small><strong class="gold-text">${esc(t.res)}</strong></div></article>`).join("")}</div><div class="center">${btn(c.hero.b1, H("book"), "btn-solid")}</div></section>`;
+  return `${pageHero(l, "results", pg.h1, pg.sub)}<section class="s-dark"><div class="wrap"><div class="grid4">${c.testi.items.map((t) => `<article class="vcard">${video(t.file, t.name, "round")}<div class="vmeta"><h3>${esc(t.name)}</h3><small>${esc(t.meta)}</small><strong>${esc(t.res)}</strong></div></article>`).join("")}</div><div class="row c-row">${btn(c.hero.b1, H("book"), "btn-gold")}</div></div></section>`;
 }
 function book(l) {
-  const c = C[l], pg = c.pages.book;
-  return `<section class="book"><div class="reveal"><span class="eyebrow">ONE EMPIRE</span><h1 class="mega">${esc(pg.h1)}</h1><p class="lead">${esc(pg.sub)}</p></div>
-<div class="book-grid"><div>${video("vsl.mp4", pg.vsl, "wide")}<p class="muted">${esc(pg.q)}</p></div><div id="calendar" data-pending="${esc(pg.pending)}"></div></div></section>`;
+  const pg = C[l].pages.book;
+  return `<section class="s-dark book"><div class="wrap"><div class="sec-head reveal"><h1>${tt(pg.h1)}</h1><p class="lead muted">${esc(pg.sub)}</p></div>
+<div class="book-grid"><div>${video("vsl.mp4", pg.vsl, "frame wide")}<p class="muted small">${esc(pg.q)}</p></div><div id="calendar" data-pending="${esc(pg.pending)}"></div></div></div></section>`;
 }
 function thanks(l) {
   const pg = C[l].pages.thanks;
-  return `<section class="book"><div class="reveal"><span class="eyebrow">ONE EMPIRE</span><h1 class="mega">${esc(pg.h1)}</h1><p class="lead">${esc(pg.sub)}</p></div><div class="thanks-vid">${video("bienvenida.mp4", pg.video, "wide")}</div></section>`;
+  return `<section class="s-dark book"><div class="wrap"><div class="sec-head reveal"><h1>${tt(pg.h1)}</h1><p class="lead muted">${esc(pg.sub)}</p></div><div class="thanks-vid">${video("bienvenida.mp4", pg.video, "frame wide")}</div></div></section>`;
 }
 function legal(l, key) {
   const pg = C[l].pages[key];
-  return `<section class="legal"><h1 class="mega">${esc(pg.h1)}</h1><p class="muted">${esc(pg.draft)}</p>${pg.s.map(([h, t]) => `<h2>${esc(h)}</h2><p>${esc(t)}</p>`).join("")}</section>`;
+  return `<section class="s-dark legal"><div class="wrap narrow2"><h1>${tt(pg.h1)}</h1><p class="muted">${esc(pg.draft)}</p>${pg.s.map(([h, t]) => `<h2>${esc(h)}</h2><p>${esc(t)}</p>`).join("")}</div></section>`;
 }
 
 const bodies = { home, about, programs, events, results, book, thanks, privacy: (l) => legal(l, "privacy"), terms: (l) => legal(l, "terms") };
@@ -249,4 +261,13 @@ mark{background:rgba(212,175,55,.18);color:var(--gold);padding:2px 8px;border-ra
 .checks{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:4px;font-size:13px}.checks .ok{color:var(--ok)}.checks .bad{color:var(--bad)}
 </style></head><body><h1>Ficha SEO</h1><p class="sub">ONE EMPIRE · Criterios Yoast SEO: la keyword principal abre el meta título (≤ 60) y la meta descripción (≤ 155), aparece en el slug, el H1/primer párrafo y el alt de la imagen. Generado automáticamente desde <code>tools/seo.mjs</code>.</p>
 <h2>Español</h2><div class="grid">${rows("es")}</div><h2>English</h2><div class="grid">${rows("en")}</div></body></html>`;
+}
+
+// Lista de imágenes/fondos con sus prompts (docs/prompts-fondos.md)
+{
+  const PROMPT_STYLE = "Estilo: fotografía cinematográfica, iluminación cálida dorada y sombras profundas negras, paleta negro carbón + dorado, alto contraste, sin texto, sin logos, sin marcas de agua, espacio negativo para superponer texto.";
+  let d = "# Imágenes y fondos del sitio\n\nColoca cada archivo en `assets/img/` con el nombre exacto y vuelve a generar el sitio (`node tools/build.mjs`). Si el archivo no existe, la sección muestra un fondo de respaldo.\n\n" + PROMPT_STYLE + "\n\n| Archivo | Dónde va | Descripción / prompt base |\n|---|---|---|\n";
+  for (const [k, v] of Object.entries(SLOTS)) d += `| \`${k}\` | ${v.split(",")[0]} | ${v} |\n`;
+  fs.mkdirSync(path.join(root, "docs"), { recursive: true });
+  fs.writeFileSync(path.join(root, "docs/imagenes-del-sitio.md"), d);
 }

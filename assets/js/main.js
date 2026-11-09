@@ -21,12 +21,13 @@
     els.forEach(function (el) { io.observe(el); });
   } else els.forEach(function (el) { el.classList.add("in"); });
 
-  // resplandor dorado que sigue al cursor
-  if (!reduce && matchMedia("(pointer:fine)").matches) {
-    var g = $(".glow"), x = 0, y = 0, tx = 0, ty = 0;
-    addEventListener("pointermove", function (e) { tx = e.clientX - 260; ty = e.clientY - 260; }, { passive: true });
-    (function loop() { x += (tx - x) * 0.08; y += (ty - y) * 0.08; g.style.setProperty("--x", x + "px"); g.style.setProperty("--y", y + "px"); requestAnimationFrame(loop); })();
-  }
+  // flechas de carruseles
+  document.querySelectorAll("[data-for]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var r = document.getElementById(b.dataset.for);
+      r.scrollBy({ left: +b.dataset.dir * (r.firstElementChild.offsetWidth + 18), behavior: "smooth" });
+    });
+  });
 
   // contadores (solo cifras con formato $600K+, $180M+)
   document.querySelectorAll("[data-count]").forEach(function (el) {
