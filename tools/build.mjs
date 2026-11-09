@@ -67,6 +67,7 @@ const SLOTS = {}; // se llena al usar pic(): alimenta docs/prompts-fondos.md
 const picUrl = (l, name) => (l === "en" ? "../" : "") + "assets/img/" + name;
 const has = (name) => fs.existsSync(path.join(root, "assets/img", name));
 const pic = (l, name, desc) => { SLOTS[name] = desc; return has(name) ? `style="--img:url(${picUrl(l, name)})"` : ""; };
+const picBg = (l, name, fallback, desc) => { SLOTS[name] = desc; const n = has(name) ? name : (has(fallback) ? fallback : null); return n ? `style="--img:url(${picUrl(l, n)})"` : ""; };
 const tt = (s) => { const w = s.split(" "); const n = Math.min(4, Math.max(1, Math.ceil(w.length / 3))); return `${esc(w.slice(0, -n).join(" "))} <span class="a">${esc(w.slice(-n).join(" "))}</span>`; };
 const btn = (t, h, cls = "") => `<a class="btn ${cls}" href="${h}">${esc(t)}</a>`;
 const num = (i) => String(i + 1).padStart(2, "0");
@@ -89,7 +90,7 @@ function home(l) {
   }).join("");
   const pillarDesc = ["Marketing", "Ventas", "Operaciones"];
   return `
-<section class="hero photo" ${pic(l, s.img, "Foto principal: Hugo y Mónica juntos")} role="img" aria-label="${esc(c.hero.alt)}">
+<section class="hero photo" ${picBg(l, s.img, "bg-degradado-dorado.jpg", "Foto principal: Hugo y Mónica juntos")} role="img" aria-label="${esc(c.hero.alt)}">
  <div class="wrap hero-in"><h1>${tt(c.hero.h1)}</h1><p class="lead">${esc(c.hero.eyebrow)}. ${esc(c.hero.sub)}</p>
  <div class="row">${btn(c.hero.b1, H("book"), "btn-gold")}${btn(c.hero.b2, H("programs"), "btn-ghost")}</div>
  <p class="proof">${esc(c.hero.proof)}</p></div></section>
@@ -149,7 +150,7 @@ function home(l) {
 <section class="s-dark"><div class="wrap narrow2">${head2("", c.faq.h2, "", true)}
  <div class="faq">${c.faq.items.map(([q, a]) => `<details class="reveal"><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join("")}</div></div></section>
 
-<section class="closing photo" ${pic(l, "bg-cierre.jpg", "Fondo del cierre: ambiente de evento/obra, cálido y desenfocado, horizontal 16:9")}><div class="wrap reveal"><h2>${tt(c.close.h2)}</h2><p class="lead">${esc(c.close.sub)}</p><p class="soft">${esc(c.close.p)}</p>
+<section class="closing photo" ${picBg(l, "bg-cierre.jpg", "bg-degradado-dorado.jpg", "Fondo del cierre, horizontal 16:9")}><div class="wrap reveal"><h2>${tt(c.close.h2)}</h2><p class="lead">${esc(c.close.sub)}</p><p class="soft">${esc(c.close.p)}</p>
  <div class="row c-row">${btn(c.close.b1, H("book"), "btn-gold")}${btn(c.close.b2, WHATSAPP, "btn-ghost")}</div></div></section>`;
 }
 

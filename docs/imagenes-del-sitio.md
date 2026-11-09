@@ -19,7 +19,7 @@ Estilo: fotografía cinematográfica, iluminación cálida dorada y sombras prof
 | `monica-tuccella.jpg` | Retrato de Mónica Tuccella | Retrato de Mónica Tuccella, 1:1 |
 | `evento-presencial.jpg` | Portada eventos presenciales | Portada eventos presenciales, horizontal 16:10 |
 | `evento-online.jpg` | Portada eventos online | Portada eventos online, horizontal 16:10 |
-| `bg-cierre.jpg` | Fondo del cierre: ambiente de evento/obra | Fondo del cierre: ambiente de evento/obra, cálido y desenfocado, horizontal 16:9 |
+| `bg-cierre.jpg` | Fondo del cierre | Fondo del cierre, horizontal 16:9 |
 | `mentores-contratistas-latinos-hugo-monica.jpg` | Fondo de cabecera de la página about | Fondo de cabecera de la página about, horizontal 16:7 |
 | `programas-para-contratistas-elite-builders.jpg` | Fondo de cabecera de la página programs | Fondo de cabecera de la página programs, horizontal 16:7 |
 | `eventos-para-contratistas-next-level-leaders.jpg` | Fondo de cabecera de la página events | Fondo de cabecera de la página events, horizontal 16:7 |
