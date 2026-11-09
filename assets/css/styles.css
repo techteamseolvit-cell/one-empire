@@ -47,7 +47,6 @@ svg{width:16px;height:16px}
 /* secciones: ritmo de color */
 section,.statband,.tight{padding:clamp(64px,8vw,112px) var(--pad)}.tight{padding-block:clamp(24px,4vw,48px)}.hero,.phero{padding-inline:var(--pad)}
 .s-dark{background:var(--black)}.s-char{background:var(--char)}.s-cream{background:var(--cream);color:#3a352a}.s-cream h2{color:var(--ink)}.s-cream h2 .a{color:#a3761a}
-.bg-grid{background:linear-gradient(rgba(10,10,10,.35),rgba(10,10,10,.55)),url(../img/bg-cuadricula.webp) center/cover}
 .s-marble{background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.72)),url(../img/bg-marmol.webp) center/cover;background-attachment:scroll}
 .s-amber{background:linear-gradient(rgba(8,8,8,.5),rgba(8,8,8,.62)),url(../img/bg-resplandor.webp) center/cover}
 .bg-glow{background-image:radial-gradient(ellipse 60% 50% at 50% 0,rgba(217,174,63,.16),transparent 70%)}
@@ -207,3 +206,6 @@ details[open]{border-color:#d4b038}.arrows button:hover,.pain-grid li:hover,.sca
  .hero[style*="--img"]{background-size:auto 117vw,cover,cover;background-position:-109vw 64px,center,center;background-repeat:no-repeat;min-height:0;padding-top:calc(64px + 98vw);padding-bottom:48px}
  .hero[style*="--img"]::after{background:linear-gradient(to top,rgba(0,0,0,.96) 42%,rgba(0,0,0,.55) 58%,rgba(0,0,0,0) 74%)}
 }
+
+/* tarjeta del próximo evento más compacta en escritorio */
+@media(min-width:1001px){.evcard{max-width:600px}.evcard-body{padding:24px 28px;gap:10px}.evcard-body p{font-size:13.5px}}

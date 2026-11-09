@@ -104,7 +104,7 @@ function home(l) {
  <article class="evcard reveal"><div class="evcard-img photo" ${pic(l, "evento-one-revolution.webp", "Flyer del próximo evento presencial (One Revolution)")}></div>
   <div class="evcard-body"><span class="pill">${esc(c.event.tag)}</span><h3>One Revolution</h3><p>${esc(c.event.line)}</p><p class="meta">${esc(c.event.when)}</p><a class="btn btn-gold btn-sm" href="${EVENT_URL}" target="_blank" rel="noopener">${esc(c.event.btn)}</a></div></article></div></section>
 
-<section class="s-char bg-grid"><div class="wrap">${head2("", c.pain.h2, `<p class="lead muted">${esc(c.pain.intro)}</p>`)}
+<section class="s-char"><div class="wrap">${head2("", c.pain.h2, `<p class="lead muted">${esc(c.pain.intro)}</p>`)}
  <ol class="pain-grid">${c.pain.items.map((t, i) => `<li class="reveal"><b>${num(i)}</b><span>${esc(t)}</span></li>`).join("")}</ol></div></section>
 
 <section class="s-geo"><div class="wrap">
@@ -141,15 +141,15 @@ function home(l) {
 
 <section class="s-dark tight"><div class="wrap"><div class="freecard reveal"><div><h2>${esc(c.free.h2)}</h2><p>${esc(c.free.p)}</p></div>${btn(c.free.btn, "#", "btn-black")}</div></div></section>
 
-<section class="s-char bg-grid"><div class="wrap">${head2("", c.fit.h2, `<p class="lead">${esc(c.fit.intro)}</p>`)}
+<section class="s-char"><div class="wrap">${head2("", c.fit.h2, `<p class="lead">${esc(c.fit.intro)}</p>`)}
  <div class="cards2"><div class="fitcard yes reveal"><h3>${esc(c.fit.yes)}</h3><ul>${c.fit.yesItems.map((t) => `<li>${esc(t)}</li>`).join("")}</ul></div>
  <div class="fitcard no reveal"><h3>${esc(c.fit.no)}</h3><ul>${c.fit.noItems.map((t) => `<li>${esc(t)}</li>`).join("")}</ul></div></div></div></section>
 
-<section class="s-char"><div class="wrap">${head2("", c.steps.h2, "", true)}
+<section class="s-dark"><div class="wrap">${head2("", c.steps.h2, "", true)}
  <div class="cards3">${c.steps.items.map(([t, d], i) => `<article class="scard reveal"><b>${i + 1}</b><h3>${esc(t)}</h3><p>${esc(d)}</p></article>`).join("")}</div>
  <div class="row c-row">${btn(c.steps.btn, H("book"), "btn-gold")}</div></div></section>
 
-<section class="s-dark"><div class="wrap narrow2">${head2("", c.faq.h2, "", true)}
+<section class="s-char"><div class="wrap narrow2">${head2("", c.faq.h2, "", true)}
  <div class="faq">${c.faq.items.map(([q, a]) => `<details class="reveal"><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join("")}</div></div></section>
 
 <section class="closing photo" ${picBg(l, "bg-cierre.jpg", "bg-degradado-dorado.jpg", "Fondo del cierre, horizontal 16:9")}><div class="wrap reveal"><h2>${tt(c.close.h2)}</h2><p class="lead">${esc(c.close.sub)}</p><p class="soft">${esc(c.close.p)}</p>
