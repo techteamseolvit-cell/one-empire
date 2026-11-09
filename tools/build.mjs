@@ -132,12 +132,12 @@ function home(l) {
 
 <section class="s-amber"><div class="wrap">
  <div class="sec-head reveal row-head"><div><h2>${tt(c.testi.h2)}</h2><p class="lead muted">${esc(c.testi.intro)}</p></div>${arrows("rail-testi")}</div>
- <div class="rail" id="rail-testi">${c.testi.items.map((t) => `<article class="vcard">${video(l, t.file, t.name, "round")}<div class="vmeta"><h3>${esc(t.name)}</h3><small>${esc(t.meta)}</small><strong>${esc(t.res)}</strong></div></article>`).join("")}</div>
+ <div class="rail" id="rail-testi">${c.testi.items.map((t) => `<article class="vcard">${video(l, t.file, t.name, "round")}<div class="vmeta"><h3>${esc(t.name)}</h3></div></article>`).join("")}</div>
  <div class="row c-row">${btn(c.testi.btn, H("results"), "btn-ghost")}</div></div></section>
 
 <section class="s-marble"><div class="wrap">${head2("", c.mentors.h2, `<p class="lead muted">${esc(c.mentors.intro)}</p>`)}
- <div class="mentors"><article class="mcard big reveal"><div class="mph photo" ${pic(l, "hugo-perez.jpg", "Retrato de Hugo Pérez, 1:1")}></div><div><h3>${esc(c.mentors.hugo[0])}</h3><p>${esc(c.mentors.hugo[1])}</p></div></article>
- <article class="mcard reveal"><div class="mph photo" ${pic(l, "monica-tuccella.jpg", "Retrato de Mónica Tuccella, 1:1")}></div><div><h3>${esc(c.mentors.monica[0])}</h3><p>${esc(c.mentors.monica[1])}</p></div></article></div>
+ <div class="mentors"><article class="mcard big reveal"><div class="mph photo" ${pic(l, "hugo-perez-mentoria-empresas-construccion.jpg", "Retrato de Hugo Pérez, 1:1")}></div><div><h3>${esc(c.mentors.hugo[0])}</h3><p>${esc(c.mentors.hugo[1])}</p></div></article>
+ <article class="mcard reveal"><div class="mph photo" ${pic(l, "monica-tuccella-marketing-contratistas.jpg", "Retrato de Mónica Tuccella, 1:1")}></div><div><h3>${esc(c.mentors.monica[0])}</h3><p>${esc(c.mentors.monica[1])}</p></div></article></div>
  <p class="bigquote gold reveal">${esc(c.mentors.quote)}</p></div></section>
 <div class="statband"><div class="wrap stats4">${c.mentors.stats.map(([n, t]) => `<div><b data-count="${esc(n)}">${esc(n)}</b><span>${esc(t)}</span></div>`).join("")}</div></div>
 <div class="s-dark tight"><div class="wrap"><div class="row c-row">${btn(c.mentors.btn, H("about"), "btn-ghost")}</div></div></div>
@@ -176,7 +176,7 @@ function about(l) {
   const person = (name, role, img, desc) => `<article class="pcard2 reveal"><div class="mph photo" ${pic(l, img, desc)}></div><h3>${esc(name)}</h3><span class="role">${esc(role)}</span></article>`;
   const blocks = x.blocks.map(([h, idx], i) => `<div class="ablock reveal"><div class="alabel"><b>${num(i)}</b><h2>${esc(h)}</h2></div><div class="atext">${idx.map((k) => `<p>${esc(a.p[k])}</p>`).join("")}</div></div>`).join("");
   return `${pageHero(l, "about", a.h1, a.sub)}
-<section class="s-dark"><div class="wrap">${head2("", x.foundersH, "", true)}<div class="founders2">${person(c.mentors.hugo[0], x.roles[0], "hugo-perez.jpg", "Retrato de Hugo Pérez, 4:5")}${person(c.mentors.monica[0], x.roles[1], "monica-tuccella.jpg", "Retrato de Mónica Tuccella, 4:5")}</div></div></section>
+<section class="s-dark"><div class="wrap">${head2("", x.foundersH, "", true)}<div class="founders2">${person(c.mentors.hugo[0], x.roles[0], "hugo-perez-mentoria-empresas-construccion.jpg", "Retrato de Hugo Pérez, 4:5")}${person(c.mentors.monica[0], x.roles[1], "monica-tuccella-marketing-contratistas.jpg", "Retrato de Mónica Tuccella, 4:5")}</div></div></section>
 <section class="s-char"><div class="wrap story2">${blocks}</div></section>
 <div class="statband"><div class="wrap stats4">${c.mentors.stats.slice(0, 2).map(([n, tx]) => `<div><b>${esc(n)}</b><span>${esc(tx)}</span></div>`).join("")}</div></div>
 <section class="s-dark"><div class="wrap"><div class="row c-row">${btn(a.btn, H("book"), "btn-gold")}</div></div></section>`;
@@ -192,7 +192,7 @@ function events(l) {
 }
 function results(l) {
   const c = C[l], pg = c.pages.results, H = (k) => slug(l, k);
-  return `${pageHero(l, "results", pg.h1, pg.sub)}<section class="s-dark"><div class="wrap"><div class="grid4">${c.testi.items.map((t) => `<article class="vcard">${video(l, t.file, t.name, "round")}<div class="vmeta"><h3>${esc(t.name)}</h3><small>${esc(t.meta)}</small><strong>${esc(t.res)}</strong></div></article>`).join("")}</div><div class="row c-row">${btn(c.hero.b1, H("book"), "btn-gold")}</div></div></section>`;
+  return `${pageHero(l, "results", pg.h1, pg.sub)}<section class="s-dark"><div class="wrap"><div class="grid4">${c.testi.items.map((t) => `<article class="vcard">${video(l, t.file, t.name, "round")}<div class="vmeta"><h3>${esc(t.name)}</h3></div></article>`).join("")}</div><div class="row c-row">${btn(c.hero.b1, H("book"), "btn-gold")}</div></div></section>`;
 }
 function book(l) {
   const pg = C[l].pages.book;

@@ -41,7 +41,7 @@
     }, { threshold: 0.6 }).observe(el);
   });
 
-  // calendario de citas (Google Calendar de Lorena)
+  // calendario de citas (Google Calendar)
   var cal = $("#calendar");
   if (cal) {
     if (cfg.CALENDAR_URL) {
