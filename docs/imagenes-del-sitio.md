@@ -8,17 +8,8 @@ Estilo: fotografía cinematográfica, iluminación cálida dorada y sombras prof
 |---|---|---|
 | `mentoria-empresas-construccion-hugo-perez-monica-tuccella.jpg` | Foto principal: Hugo y Mónica juntos | Foto principal: Hugo y Mónica juntos |
 | `evento-next-level-leaders.webp` | Flyer/foto del próximo evento presencial (Next Level Leaders) | Flyer/foto del próximo evento presencial (Next Level Leaders), horizontal 16:7 |
-| `pilar-marketing.jpg` | Portada del pilar Marketing | Portada del pilar Marketing |
-| `pilar-ventas.jpg` | Portada del pilar Sales | Portada del pilar Sales |
-| `pilar-operaciones.jpg` | Portada del pilar Operations and team | Portada del pilar Operations and team |
-| `programa-one.jpg` | Portada del programa ONE | Portada del programa ONE |
-| `programa-elite-builders.jpg` | Portada del programa Elite Builders | Portada del programa Elite Builders |
-| `programa-elite-closers.jpg` | Portada del programa Elite Closers | Portada del programa Elite Closers |
-| `programa-prime-3d.jpg` | Portada del programa Prime 3D Design | Portada del programa Prime 3D Design |
 | `hugo-perez.jpg` | Retrato de Hugo Pérez | Retrato de Hugo Pérez, 1:1 |
 | `monica-tuccella.jpg` | Retrato de Mónica Tuccella | Retrato de Mónica Tuccella, 1:1 |
-| `evento-presencial.webp` | Portada eventos presenciales | Portada eventos presenciales, horizontal 16:10 |
-| `evento-online.webp` | Portada eventos online | Portada eventos online, horizontal 16:10 |
 | `bg-cierre.jpg` | Fondo del cierre | Fondo del cierre, horizontal 16:9 |
 | `mentores-contratistas-latinos-hugo-monica.jpg` | Fondo de cabecera de la página about | Fondo de cabecera de la página about |
 | `programas-para-contratistas-elite-builders.jpg` | Fondo de cabecera de la página programs | Fondo de cabecera de la página programs |

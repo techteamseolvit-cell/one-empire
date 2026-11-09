@@ -106,21 +106,21 @@ function home(l) {
 <section class="s-char bg-grid"><div class="wrap">${head2("", c.pain.h2, `<p class="lead muted">${esc(c.pain.intro)}</p>`)}
  <ol class="pain-grid">${c.pain.items.map((t, i) => `<li class="reveal"><b>${num(i)}</b><span>${esc(t)}</span></li>`).join("")}</ol></div></section>
 
-<section class="s-cream"><div class="wrap narrow2">
+<section class="s-geo"><div class="wrap">
  <div class="sec-head c reveal"><h2>${tt(c.reality.h2)}</h2></div>
  <div class="cols reveal">${c.reality.p.map((t) => `<p>${esc(t)}</p>`).join("")}</div>
- <p class="bigquote reveal">${esc(c.reality.quote)}</p></div></section>
+ <p class="bigquote gold reveal">${esc(c.reality.quote)}</p></div></section>
 
 <section class="s-dark"><div class="wrap split">
  <div class="reveal"><h2 class="h2">${tt(c.proof.h2)}</h2>${c.proof.p.map((t) => `<p>${esc(t)}</p>`).join("")}<div class="row">${btn(c.proof.btn, H("book"), "btn-gold")}</div></div>
  <div class="reveal">${video("hugo-potros.mp4", c.proof.video, "frame")}</div></div></section>
 
-<section class="s-char bg-glow"><div class="wrap">${head2(c.pillars.label, c.pillars.h2, "", true)}
- <div class="cards3">${c.pillars.items.map(([t, d], i) => `<article class="pcard photo reveal" ${picBg(l, "pilar-" + ["marketing", "ventas", "operaciones"][i] + ".jpg", "bg-geometria.webp", "Portada del pilar " + t, ["15% 50%", "50% 50%", "85% 50%"][i])}><div><b>${num(i)}</b><h3>${esc(t)}</h3><p>${esc(d[0].toUpperCase() + d.slice(1))}</p></div></article>`).join("")}</div></div></section>
+<section class="s-conc"><div class="wrap">${head2(c.pillars.label, c.pillars.h2, "", true)}
+ <div class="cards3">${c.pillars.items.map(([t, d], i) => `<article class="gcard reveal"><b>${num(i)}</b><h3>${esc(t)}</h3><p>${esc(d[0].toUpperCase() + d.slice(1))}</p></article>`).join("")}</div></div></section>
 
 <section class="s-dark"><div class="wrap">
- <div class="sec-head reveal row-head"><div><span class="eyebrow">${esc(c.programs.label)}</span><h2>${tt(c.programs.h2)}</h2><p class="lead muted">${esc(c.programs.intro)}</p></div>${arrows("rail-prog")}</div>
- <div class="rail" id="rail-prog">${c.programs.cards.map(([tag, name, line], i) => `<a class="prcard photo${i === 1 ? " flag" : ""}" href="${H("programs")}#p${i + 1}" ${picBg(l, "programa-" + ["one", "elite-builders", "elite-closers", "prime-3d"][i] + ".jpg", "bg-concreto.webp", "Portada del programa " + name, ["10% 50%", "40% 50%", "70% 50%", "95% 50%"][i])}><span class="pill">${esc(tag)}</span><div><h3>${esc(name)}</h3><p>${esc(line)}</p><span class="go">${esc(c.programs.btn)} ${arrow}</span></div></a>`).join("")}</div>
+ ${head2(c.programs.label, c.programs.h2, `<p class="lead muted">${esc(c.programs.intro)}</p>`)}
+ <div class="cards4">${c.programs.cards.map(([tag, name, line], i) => `<a class="gcard prog reveal${i === 1 ? " flag" : ""}" href="${H("programs")}#p${i + 1}"><span class="pill">${esc(tag)}</span><h3>${esc(name)}</h3><p>${esc(line)}</p><span class="go">${esc(c.programs.btn)} ${arrow}</span></a>`).join("")}</div>
  <p class="bigquote gold reveal">${esc(c.programs.quote)}</p></div></section>
 
 <section class="s-amber"><div class="wrap">
@@ -136,7 +136,7 @@ function home(l) {
 <div class="s-dark tight"><div class="wrap"><div class="row c-row">${btn(c.mentors.btn, H("about"), "btn-ghost")}</div></div></div>
 
 <section class="s-dark bg-grid"><div class="wrap">${head2(c.events.label, c.events.h2, "", true)}
- <div class="cards2">${c.events.items.map(([t, d, b, a], i) => `<a class="ecard photo reveal" href="${H("events")}#${a}" ${pic(l, i ? "evento-online.webp" : "evento-presencial.webp", "Portada eventos " + (i ? "online" : "presenciales") + ", horizontal 16:10")}><div><span class="pill">${esc(t.split(" · ")[0])}</span><h3>${esc(t.split(" · ")[1] || t)}</h3><p>${esc(d)}</p><span class="go">${esc(b)} ${arrow}</span></div></a>`).join("")}</div></div></section>
+ <div class="cards2">${c.events.items.map(([t, d, b, a]) => `<a class="gcard reveal" href="${H("events")}#${a}"><span class="pill">${esc(t.split(" · ")[0])}</span><h3>${esc(t.split(" · ")[1] || t)}</h3><p>${esc(d)}</p><span class="go">${esc(b)} ${arrow}</span></a>`).join("")}</div></div></section>
 
 <section class="s-dark tight"><div class="wrap"><div class="freecard reveal"><div><h2>${esc(c.free.h2)}</h2><p>${esc(c.free.p)}</p></div>${btn(c.free.btn, "#", "btn-black")}</div></div></section>
 
@@ -170,7 +170,7 @@ function about(l) {
 }
 function programs(l) {
   const c = C[l], pg = c.pages.programs, H = (k) => slug(l, k);
-  return `${pageHero(l, "programs", pg.h1, pg.sub)}<section class="s-dark"><div class="wrap"><div class="cards2">${c.programs.cards.map(([tag, name, line], i) => `<article class="prcard photo reveal${i === 1 ? " flag" : ""}" id="p${i + 1}" ${picBg(l, "programa-" + ["one", "elite-builders", "elite-closers", "prime-3d"][i] + ".jpg", "bg-concreto.webp", "Portada del programa " + name, ["10% 50%", "40% 50%", "70% 50%", "95% 50%"][i])}><span class="pill">${esc(tag)}</span><div><h3>${esc(name)}</h3><p>${esc(line)}</p>${btn(c.hero.b1, H("book"), "btn-gold btn-sm")}</div></article>`).join("")}</div><p class="bigquote gold reveal">${esc(c.programs.quote)}</p></div></section>`;
+  return `${pageHero(l, "programs", pg.h1, pg.sub)}<section class="s-dark"><div class="wrap"><div class="cards2">${c.programs.cards.map(([tag, name, line], i) => `<article class="gcard prog reveal${i === 1 ? " flag" : ""}" id="p${i + 1}"><span class="pill">${esc(tag)}</span><h3>${esc(name)}</h3><p>${esc(line)}</p>${btn(c.hero.b1, H("book"), i === 1 ? "btn-black btn-sm" : "btn-gold btn-sm")}</article>`).join("")}</div><p class="bigquote gold reveal">${esc(c.programs.quote)}</p></div></section>`;
 }
 function events(l) {
   const c = C[l], pg = c.pages.events, H = (k) => slug(l, k);
