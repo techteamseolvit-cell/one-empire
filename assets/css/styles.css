@@ -172,3 +172,9 @@ details[open]{border-color:#d4b038}.arrows button:hover,.pain-grid li:hover,.sca
 @media(max-width:1000px){.cards3,.cards2{grid-template-columns:1fr}.mentors{grid-template-columns:1fr}.gcard h3{min-height:0}}
 @media(max-width:600px){.cards4{grid-template-columns:1fr}}
 .mph{aspect-ratio:4/3}.mcard{display:flex;flex-direction:column}.mcard>div:last-child{flex:1}
+/* frases destacadas: más anchas y más pequeñas (px en vez de ch para no depender de la fuente) */
+.bigquote{font-size:clamp(17px,1.9vw,27px);line-height:1.35;letter-spacing:.01em;max-width:min(100%,1000px);margin-top:clamp(36px,4vw,56px)}
+.bigquote.gold{margin-top:clamp(40px,4.5vw,64px)}
+.closing h2{max-width:min(100%,1100px)}.hero h1{max-width:min(100%,1000px)}
+.sec-head h2{max-width:none}
+.closing .lead{max-width:min(100%,900px)}.closing .soft{max-width:min(100%,820px)}
