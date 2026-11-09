@@ -8,8 +8,8 @@ Estilo: fotografía cinematográfica, iluminación cálida dorada y sombras prof
 |---|---|---|
 | `mentoria-empresas-construccion-hugo-perez-monica-tuccella.jpg` | Foto principal: Hugo y Mónica juntos | Foto principal: Hugo y Mónica juntos |
 | `evento-one-revolution.webp` | Flyer del próximo evento presencial (One Revolution) | Flyer del próximo evento presencial (One Revolution) |
-| `hugo-perez.jpg` | Retrato de Hugo Pérez | Retrato de Hugo Pérez, 1:1 |
-| `monica-tuccella.jpg` | Retrato de Mónica Tuccella | Retrato de Mónica Tuccella, 1:1 |
+| `hugo-perez.jpg` | Retrato de Hugo Pérez | Retrato de Hugo Pérez, 4:5 |
+| `monica-tuccella.jpg` | Retrato de Mónica Tuccella | Retrato de Mónica Tuccella, 4:5 |
 | `bg-cierre.jpg` | Fondo del cierre | Fondo del cierre, horizontal 16:9 |
 | `mentores-contratistas-latinos-hugo-monica.jpg` | Fondo de cabecera de la página about | Fondo de cabecera de la página about |
 | `programas-para-contratistas-elite-builders.jpg` | Fondo de cabecera de la página programs | Fondo de cabecera de la página programs |

@@ -75,14 +75,16 @@ const has = (name) => fs.existsSync(path.join(root, "assets/img", name));
 const pic = (l, name, desc) => { SLOTS[name] = desc; return has(name) ? `style="--img:url(${picUrl(l, name)})"` : ""; };
 const picBg = (l, name, fallback, desc, pos = "center") => { SLOTS[name] = desc; const n = has(name) ? name : (has(fallback) ? fallback : null); return n ? `style="--img:url(${picUrl(l, n)});--pos:${pos}"` : ""; };
 const tt = (s) => { const w = s.split(" "); const n = Math.min(4, Math.max(1, Math.ceil(w.length / 3))); return `${esc(w.slice(0, -n).join(" "))} <span class="a">${esc(w.slice(-n).join(" "))}</span>`; };
-const btn = (t, h, cls = "") => `<a class="btn ${cls}" href="${h}">${esc(t)}</a>`;
+const btn = (t, h, cls = "", attrs = "") => `<a class="btn ${cls}" href="${h}" ${attrs}>${esc(t.replace(/\s*→$/, ""))}${/→$/.test(t) ? '<span class="ar">→</span>' : ""}</a>`;
 const num = (i) => String(i + 1).padStart(2, "0");
 const arrow = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>`;
 const playBtn = `<span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>`;
 const arrows = (id) => `<div class="arrows"><button data-dir="-1" data-for="${id}" aria-label="Prev">‹</button><button data-dir="1" data-for="${id}" aria-label="Next">›</button></div>`;
-function video(file, label, cls = "") {
+function video(l, file, label, cls = "") {
+  const up = l === "en" ? "../" : "";
+  const poster = file.replace(/\.mp4$/, ".jpg");
   return hasVideo(file)
-    ? `<div class="vid ${cls}"><video src="assets/video/${esc(file)}" controls playsinline preload="none"></video></div>`
+    ? `<div class="vid ${cls}"><video src="${up}assets/video/${esc(file)}"${hasVideo(poster) ? ` poster="${up}assets/video/${esc(poster)}"` : ""} controls playsinline preload="none"></video></div>`
     : `<div class="vid ${cls} ph">${playBtn}<small>${esc(label)}</small></div>`;
 }
 const head2 = (eyebrow, h, extra = "", center = false) => `<div class="sec-head${center ? " c" : ""} reveal">${eyebrow ? `<span class="eyebrow">${esc(eyebrow)}</span>` : ""}<h2>${tt(h)}</h2>${extra}</div>`;
@@ -106,7 +108,7 @@ function home(l) {
 <section class="s-dark"><div class="wrap">
  <div class="sec-head reveal row-head"><div><span class="eyebrow">${esc(c.event.label)}</span><h2>${tt(c.event.h2)}</h2></div><a class="more" href="${H("events")}">${esc(c.nav.events)} ${arrow}</a></div>
  <article class="evcard reveal"><div class="evcard-img photo" ${pic(l, "evento-one-revolution.webp", "Flyer del próximo evento presencial (One Revolution)")}></div>
-  <div class="evcard-body"><span class="pill">${esc(c.event.tag)}</span><h3>One Revolution</h3><p>${esc(c.event.line)}</p><p class="meta">${esc(c.event.when)}</p><a class="btn btn-gold btn-sm" href="${EVENT_URL}" target="_blank" rel="noopener">${esc(c.event.btn)}</a></div></article></div></section>
+  <div class="evcard-body"><span class="pill">${esc(c.event.tag)}</span><h3>One Revolution</h3><p>${esc(c.event.line)}</p><p class="meta">${esc(c.event.when)}</p>${btn(c.event.btn, EVENT_URL, "btn-gold btn-sm", 'target="_blank" rel="noopener"')}</div></article></div></section>
 
 <section class="s-char"><div class="wrap">${head2("", c.pain.h2, `<p class="lead muted">${esc(c.pain.intro)}</p>`)}
  <ol class="pain-grid">${c.pain.items.map((t, i) => `<li class="reveal"><b>${num(i)}</b><span>${esc(t)}</span></li>`).join("")}</ol></div></section>
@@ -118,7 +120,7 @@ function home(l) {
 
 <section class="s-dark"><div class="wrap split">
  <div class="reveal"><h2 class="h2">${tt(c.proof.h2)}</h2>${c.proof.p.map((t) => `<p>${esc(t)}</p>`).join("")}<div class="row">${btn(c.proof.btn, H("book"), "btn-gold")}</div></div>
- <div class="reveal">${video("hugo-potros.mp4", c.proof.video, "frame")}</div></div></section>
+ <div class="reveal">${video(l, "hugo-potros.mp4", c.proof.video, "frame")}</div></div></section>
 
 <section class="s-conc"><div class="wrap">${head2(c.pillars.label, c.pillars.h2, "", true)}
  <div class="cards3">${c.pillars.items.map(([t, d], i) => `<article class="gcard reveal"><b>${num(i)}</b><h3>${esc(t)}</h3><p>${esc(d[0].toUpperCase() + d.slice(1))}</p></article>`).join("")}</div></div></section>
@@ -130,7 +132,7 @@ function home(l) {
 
 <section class="s-amber"><div class="wrap">
  <div class="sec-head reveal row-head"><div><h2>${tt(c.testi.h2)}</h2><p class="lead muted">${esc(c.testi.intro)}</p></div>${arrows("rail-testi")}</div>
- <div class="rail" id="rail-testi">${c.testi.items.map((t) => `<article class="vcard">${video(t.file, t.name, "round")}<div class="vmeta"><h3>${esc(t.name)}</h3><small>${esc(t.meta)}</small><strong>${esc(t.res)}</strong></div></article>`).join("")}</div>
+ <div class="rail" id="rail-testi">${c.testi.items.map((t) => `<article class="vcard">${video(l, t.file, t.name, "round")}<div class="vmeta"><h3>${esc(t.name)}</h3><small>${esc(t.meta)}</small><strong>${esc(t.res)}</strong></div></article>`).join("")}</div>
  <div class="row c-row">${btn(c.testi.btn, H("results"), "btn-ghost")}</div></div></section>
 
 <section class="s-marble"><div class="wrap">${head2("", c.mentors.h2, `<p class="lead muted">${esc(c.mentors.intro)}</p>`)}
@@ -170,8 +172,14 @@ function homeSchema(l) {
 const pageHero = (l, p, h1, sub) => `<section class="phero photo" ${picBg(l, SEO[l][p].img, "bg-resplandor.webp", "Fondo de cabecera de la página " + p)}><div class="wrap reveal"><h1>${tt(h1)}</h1><p class="lead">${esc(sub)}</p></div></section>`;
 
 function about(l) {
-  const a = C[l].about, H = (k) => slug(l, k);
-  return `${pageHero(l, "about", a.h1, a.sub)}<section class="s-dark"><div class="wrap story">${a.p.map((t, i) => `<p class="${i === 0 ? "dropcap " : ""}reveal">${esc(t)}</p>`).join("")}<div class="row">${btn(a.btn, H("book"), "btn-gold")}</div></div></section>`;
+  const c = C[l], a = c.about, x = c.aboutx, H = (k) => slug(l, k);
+  const person = (name, role, img, desc) => `<article class="pcard2 reveal"><div class="mph photo" ${pic(l, img, desc)}></div><h3>${esc(name)}</h3><span class="role">${esc(role)}</span></article>`;
+  const blocks = x.blocks.map(([h, idx], i) => `<div class="ablock reveal"><div class="alabel"><b>${num(i)}</b><h2>${esc(h)}</h2></div><div class="atext">${idx.map((k) => `<p>${esc(a.p[k])}</p>`).join("")}</div></div>`).join("");
+  return `${pageHero(l, "about", a.h1, a.sub)}
+<section class="s-dark"><div class="wrap">${head2("", x.foundersH, "", true)}<div class="founders2">${person(c.mentors.hugo[0], x.roles[0], "hugo-perez.jpg", "Retrato de Hugo Pérez, 4:5")}${person(c.mentors.monica[0], x.roles[1], "monica-tuccella.jpg", "Retrato de Mónica Tuccella, 4:5")}</div></div></section>
+<section class="s-char"><div class="wrap story2">${blocks}</div></section>
+<div class="statband"><div class="wrap stats4">${c.mentors.stats.slice(0, 2).map(([n, tx]) => `<div><b>${esc(n)}</b><span>${esc(tx)}</span></div>`).join("")}</div></div>
+<section class="s-dark"><div class="wrap"><div class="row c-row">${btn(a.btn, H("book"), "btn-gold")}</div></div></section>`;
 }
 function programs(l) {
   const c = C[l], pg = c.pages.programs, H = (k) => slug(l, k);
@@ -179,21 +187,21 @@ function programs(l) {
 }
 function events(l) {
   const c = C[l], pg = c.pages.events, H = (k) => slug(l, k);
-  const grp = (id, title, items) => `<div class="ev-group" id="${id}"><h2 class="h2 reveal">${tt(title)}</h2><div class="cards3">${items.map((t) => `${t === "One Revolution" ? `<article class="evcard2 reveal"><span class="pill">${esc(title)}</span><h3>${esc(t)}</h3><p>${esc(c.event.when)}</p><p class="muted">${esc(c.event.line)}</p><a class="btn btn-gold btn-sm" href="${EVENT_URL}" target="_blank" rel="noopener">${esc(c.event.btn)}</a></article>` : `<article class="evcard2 reveal"><span class="pill">${esc(title)}</span><h3>${esc(t)}</h3><p class="muted">${esc(pg.soon)}</p>${btn(c.event.btn, H("book"), "btn-gold btn-sm")}</article>`}`).join("")}</div></div>`;
+  const grp = (id, title, items) => `<div class="ev-group" id="${id}"><h2 class="h2 reveal">${tt(title)}</h2><div class="cards3">${items.map((t) => `${t === "One Revolution" ? `<article class="evcard2 reveal"><span class="pill">${esc(title)}</span><h3>${esc(t)}</h3><p>${esc(c.event.when)}</p><p class="muted">${esc(c.event.line)}</p>${btn(c.event.btn, EVENT_URL, "btn-gold btn-sm", 'target="_blank" rel="noopener"')}</article>` : `<article class="evcard2 reveal"><span class="pill">${esc(title)}</span><h3>${esc(t)}</h3><p class="muted">${esc(pg.soon)}</p>${btn(c.event.btn, H("book"), "btn-gold btn-sm")}</article>`}`).join("")}</div></div>`;
   return `${pageHero(l, "events", pg.h1, pg.sub)}<section class="s-dark"><div class="wrap">${grp("presencial", pg.inperson, c.nav.inperson_items)}${grp("online", pg.online, c.nav.online_items)}</div></section>`;
 }
 function results(l) {
   const c = C[l], pg = c.pages.results, H = (k) => slug(l, k);
-  return `${pageHero(l, "results", pg.h1, pg.sub)}<section class="s-dark"><div class="wrap"><div class="grid4">${c.testi.items.map((t) => `<article class="vcard">${video(t.file, t.name, "round")}<div class="vmeta"><h3>${esc(t.name)}</h3><small>${esc(t.meta)}</small><strong>${esc(t.res)}</strong></div></article>`).join("")}</div><div class="row c-row">${btn(c.hero.b1, H("book"), "btn-gold")}</div></div></section>`;
+  return `${pageHero(l, "results", pg.h1, pg.sub)}<section class="s-dark"><div class="wrap"><div class="grid4">${c.testi.items.map((t) => `<article class="vcard">${video(l, t.file, t.name, "round")}<div class="vmeta"><h3>${esc(t.name)}</h3><small>${esc(t.meta)}</small><strong>${esc(t.res)}</strong></div></article>`).join("")}</div><div class="row c-row">${btn(c.hero.b1, H("book"), "btn-gold")}</div></div></section>`;
 }
 function book(l) {
   const pg = C[l].pages.book;
   return `<section class="s-dark book"><div class="wrap"><div class="sec-head reveal"><h1>${tt(pg.h1)}</h1><p class="lead muted">${esc(pg.sub)}</p></div>
-<div class="book-grid"><div>${video("vsl.mp4", pg.vsl, "frame wide")}<p class="muted small">${esc(pg.q)}</p></div><div id="calendar" data-pending="${esc(pg.pending)}"></div></div></div></section>`;
+<div class="book-grid"><div>${video(l, "vsl.mp4", pg.vsl, "frame wide")}<p class="muted small">${esc(pg.q)}</p></div><div id="calendar" data-pending="${esc(pg.pending)}"></div></div></div></section>`;
 }
 function thanks(l) {
   const pg = C[l].pages.thanks;
-  return `<section class="s-dark book"><div class="wrap"><div class="sec-head reveal"><h1>${tt(pg.h1)}</h1><p class="lead muted">${esc(pg.sub)}</p></div><div class="thanks-vid">${video("bienvenida.mp4", pg.video, "frame wide")}</div></div></section>`;
+  return `<section class="s-dark book"><div class="wrap"><div class="sec-head reveal"><h1>${tt(pg.h1)}</h1><p class="lead muted">${esc(pg.sub)}</p></div><div class="thanks-vid">${video(l, "bienvenida.mp4", pg.video, "frame wide")}</div></div></section>`;
 }
 function legal(l, key) {
   const pg = C[l].pages[key];
