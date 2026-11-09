@@ -314,3 +314,44 @@ details[open]{border-color:#d4b038}.arrows button:hover,.pain-grid li:hover,.sca
 .vid.round .vplay{place-items:end center;padding-bottom:22px}
 .vid.round .vplay .play{width:60px;height:60px}.vid.round .vplay .play svg{width:24px;height:24px}
 .vid.frame .vplay,.vid.wide .vplay{place-items:center;padding-bottom:0}
+
+/* ====== HEADER: sin raya; degradado suave en vez de borde ====== */
+#site-header,#site-header.solid{border:0;border-bottom:0}
+#site-header::before{content:"";position:absolute;inset:0 0 -26px 0;z-index:-1;pointer-events:none;
+ background:linear-gradient(to bottom,rgba(0,0,0,.78) 0%,rgba(0,0,0,.5) 55%,rgba(0,0,0,0) 100%);opacity:.9;transition:opacity .35s}
+#site-header.solid{background:linear-gradient(to bottom,rgba(0,0,0,.94),rgba(0,0,0,.88));backdrop-filter:blur(14px);box-shadow:0 14px 34px rgba(0,0,0,.45)}
+#site-header.solid::before{opacity:0}
+.nav{border-bottom:0!important}
+/* móvil: la franja sobre la foto del Hero ya no es dorada (evita el corte duro) */
+@media(max-width:560px){.hero[style*="--img"]{background-color:#050403;background-image:var(--img),linear-gradient(#050403,#050403)}}
+
+/* ====== RESPONSIVE: TODO centrado (títulos, párrafos, listas, preguntas, footer, legales) ====== */
+@media(max-width:1000px){
+ body,main,section,.wrap,h1,h2,h3,h4,p,li,summary,details p,blockquote,small,span.eyebrow,.lead,.story,.legal,.atext,.cols,.cols p,
+ .mcard p,.mcard h3,.gcard p,.fitcard li,.fitcard h3,.faq details,.faq p,.tl-card,.tl-card p,.tl-card details p,.proof,.disclaimer,.vmeta{text-align:center}
+ .legal h2,.legal p,.legal h1{text-align:center}
+ /* párrafos en dos columnas -> una sola, centrados */
+ .cols{columns:1}
+ /* listas "para quién es": la marca va arriba del texto, centrada */
+ .fitcard li{display:block;padding:14px 0;text-align:center}
+ .fitcard li::before{position:static;display:block;transform:none;margin:0 auto 4px;font-size:16px}
+ /* preguntas frecuentes: texto centrado y el "+" sin invadir el texto */
+ summary{text-align:center;padding:22px 48px}
+ summary::after{right:16px}
+ /* "Leer más" */
+ .tl-card summary{justify-content:center;padding:0}
+ /* letra capital deshabilitada (flotaría a la izquierda) */
+ .dropcap::first-letter{float:none;font-size:inherit;padding:0;color:inherit;font-family:inherit}
+ /* tarjetas de mentores */
+ .mcard>div:last-child{align-items:center;text-align:center}
+ /* barra de seguimiento de pasos y cifras */
+ .pain-grid li{justify-items:center;text-align:center}
+ .step,.scard{text-align:center}
+ /* pie de página */
+ #site-footer,#site-footer h4,#site-footer a,.foot-grid>div,.foot-bottom{text-align:center}
+ .foot-bottom{flex-direction:column;align-items:center}
+ /* listas sueltas y bloques con viñetas */
+ ul,ol{text-align:center}
+ /* aviso en calendario */
+ .pending{text-align:center}
+}
