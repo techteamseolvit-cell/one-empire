@@ -355,3 +355,16 @@ details[open]{border-color:#d4b038}.arrows button:hover,.pain-grid li:hover,.sca
  /* aviso en calendario */
  .pending{text-align:center}
 }
+
+/* título en dos líneas solo en móvil */
+.mbr{display:none}@media(max-width:1000px){.mbr{display:inline}}
+
+/* fotos de los mentores más pequeñas y recortadas (sin tanto espacio sobre la cabeza) */
+@media(max-width:1000px){
+ .founders2{grid-template-columns:1fr;max-width:260px;gap:16px}
+ .pcard2 .mph{aspect-ratio:1/1;background-position:center 18%}
+ .pcard2 h3{margin:14px 0 2px;font-size:17px}.pcard2 .role{font-size:10.5px}
+ .mcard .mph{max-width:260px;aspect-ratio:1/1;background-position:center 18%;border-radius:var(--r);margin:22px auto 0}
+}
+/* botones largos: nunca se desbordan; si no caben, pasan a dos líneas centradas */
+@media(max-width:400px){.btn{white-space:normal;line-height:1.35;text-align:center;justify-content:center}}

@@ -74,7 +74,7 @@ const picUrl = (l, name) => "../img/" + name + "?v=" + ver("assets/img/" + name)
 const has = (name) => fs.existsSync(path.join(root, "assets/img", name));
 const pic = (l, name, desc) => { SLOTS[name] = desc; return has(name) ? `style="--img:url(${picUrl(l, name)})"` : ""; };
 const picBg = (l, name, fallback, desc, pos = "center") => { SLOTS[name] = desc; const n = has(name) ? name : (has(fallback) ? fallback : null); return n ? `style="--img:url(${picUrl(l, n)});--pos:${pos}"` : ""; };
-const tt = (s) => { const w = s.split(" "); const n = Math.min(4, Math.max(1, Math.ceil(w.length / 3))); return `${esc(w.slice(0, -n).join(" "))} <span class="a">${esc(w.slice(-n).join(" "))}</span>`; };
+const tt = (s) => { if (s.includes("\n")) { const [a, b] = s.split("\n"); return `${esc(a)}<br class="mbr"> <span class="a">${esc(b)}</span>`; }  const w = s.split(" "); const n = Math.min(4, Math.max(1, Math.ceil(w.length / 3))); return `${esc(w.slice(0, -n).join(" "))} <span class="a">${esc(w.slice(-n).join(" "))}</span>`; };
 const btn = (t, h, cls = "", attrs = "") => `<a class="btn ${cls}" href="${h}" ${attrs}>${esc(t.replace(/\s*→$/, ""))}${/→$/.test(t) ? '<span class="ar">→</span>' : ""}</a>`;
 const num = (i) => String(i + 1).padStart(2, "0");
 const arrow = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>`;
