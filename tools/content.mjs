@@ -33,10 +33,8 @@ es: {
     ["[Etiqueta]","Elite Closers","[Una línea]"],
     ["[Etiqueta]","Prime Diseño 3D","[Una línea]"]]},
   testi:{h2:"Resultados reales de contratistas latinos que transformaron su empresa",intro:"Ellos estaban donde tú estás hoy.",btn:"VER MÁS RESULTADOS →",items:[
-    {name:"Abraham Pacheco",file:"testimonio-abraham-pacheco-mastermind.mp4"},
     {name:"Abraham Pacheco",file:"testimonio-abraham-pacheco-mentoria.mp4"},
     {name:"Edison Humala",file:"testimonio-edison-humala-mentoria.mp4"},
-    {name:"Edison Humala",file:"testimonio-edison-humala-mastermind.mp4"},
     {name:"Edgar Pérez",file:"testimonio-edgar-perez-facturacion.mp4"},
     {name:"Daniel Méndez",file:"testimonio-daniel-mendez.mp4"},
     {name:"Nayeli Meza",file:"testimonio-nayeli-meza-marketing.mp4"},
@@ -113,10 +111,8 @@ en: {
     ["[Label]","Elite Closers","[One line]"],
     ["[Label]","Prime 3D Design","[One line]"]]},
   testi:{h2:"Real results from Latino contractors who transformed their company",intro:"They were where you are today.",btn:"SEE MORE RESULTS →",items:[
-    {name:"Abraham Pacheco",file:"testimonio-abraham-pacheco-mastermind.mp4"},
     {name:"Abraham Pacheco",file:"testimonio-abraham-pacheco-mentoria.mp4"},
     {name:"Edison Humala",file:"testimonio-edison-humala-mentoria.mp4"},
-    {name:"Edison Humala",file:"testimonio-edison-humala-mastermind.mp4"},
     {name:"Edgar Pérez",file:"testimonio-edgar-perez-facturacion.mp4"},
     {name:"Daniel Méndez",file:"testimonio-daniel-mendez.mp4"},
     {name:"Nayeli Meza",file:"testimonio-nayeli-meza-marketing.mp4"},
