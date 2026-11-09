@@ -174,13 +174,22 @@ const pageHero = (l, p, h1, sub) => `<section class="phero photo" ${picBg(l, SEO
 function about(l) {
   const c = C[l], a = c.about, x = c.aboutx, H = (k) => slug(l, k);
   const person = (name, role, img, desc) => `<article class="pcard2 reveal"><div class="mph photo" ${pic(l, img, desc)}></div><h3>${esc(name)}</h3><span class="role">${esc(role)}</span></article>`;
-  const blocks = x.blocks.map(([h, idx], i) => `<div class="ablock reveal"><div class="alabel"><b>${num(i)}</b><h2>${esc(h)}</h2></div><div class="atext">${idx.map((k) => `<p>${esc(a.p[k])}</p>`).join("")}</div></div>`).join("");
+  // Se muestra el inicio de cada etapa (texto íntegro del documento) y el resto queda en "Leer más".
+  const sentences = (tx) => tx.match(/[^.!?]+[.!?]+["”]?\s*/g) || [tx];
+  const step = ([h, idx], i) => {
+    const first = sentences(a.p[idx[0]]);
+    let ex = "", k = 0;
+    while (k < first.length && ex.length < 110) ex += first[k++];
+    const rest = [first.slice(k).join("").trim(), ...idx.slice(1).map((n) => a.p[n])].filter(Boolean);
+    return `<li class="tl reveal"><span class="dot">${num(i)}</span><div class="tl-card"><h3>${esc(h)}</h3><p class="ex">${esc(ex.trim())}</p>${rest.length ? `<details><summary><span class="m">${esc(x.more)}</span><span class="l">${esc(x.less)}</span></summary>${rest.map((r) => `<p>${esc(r)}</p>`).join("")}</details>` : ""}</div></li>`;
+  };
+  const stats = c.cred.map((tx) => { let m = tx.match(/^(.*?\+)\s+(.*)$/); if (!m) { const g = tx.match(/GOLD/); m = g ? ["", "GOLD", tx.replace("GOLD", "").replace(/\s+/g, " ").trim()] : ["", tx, ""]; } return `<div class="stat3 reveal"><b>${esc(m[1])}</b><span>${esc(m[2])}</span></div>`; }).join("");
   return `${pageHero(l, "about", a.h1, a.sub)}
 <section class="s-dark"><div class="wrap">${head2("", x.foundersH, "", true)}<div class="founders2">${person(c.mentors.hugo[0], x.roles[0], "hugo-perez-mentoria-empresas-construccion.jpg", "Retrato de Hugo Pérez, 4:5")}${person(c.mentors.monica[0], x.roles[1], "monica-tuccella-marketing-contratistas.jpg", "Retrato de Mónica Tuccella, 4:5")}</div></div></section>
-<section class="s-char"><div class="wrap story2">${blocks}</div></section>
-<div class="statband"><div class="wrap stats4">${c.mentors.stats.slice(0, 2).map(([n, tx]) => `<div><b>${esc(n)}</b><span>${esc(tx)}</span></div>`).join("")}</div></div>
-<section class="s-dark"><div class="wrap"><div class="row c-row">${btn(a.btn, H("book"), "btn-gold")}</div></div></section>`;
+<section class="s-char"><div class="wrap"><ol class="timeline">${x.blocks.map(step).join("")}</ol></div></section>
+<section class="s-dark"><div class="wrap"><div class="stats-cards">${stats}</div><p class="bigquote gold reveal">${esc(c.mentors.quote)}</p><div class="row c-row">${btn(a.btn, H("book"), "btn-gold")}${btn(c.hero.b2, H("programs"), "btn-ghost")}</div></div></section>`;
 }
+
 function programs(l) {
   const c = C[l], pg = c.pages.programs, H = (k) => slug(l, k);
   return `${pageHero(l, "programs", pg.h1, pg.sub)}<section class="s-dark"><div class="wrap"><div class="cards2">${c.programs.cards.map(([tag, name, line], i) => `<article class="gcard prog reveal${i === 1 ? " flag" : ""}" id="p${i + 1}"><span class="pill">${esc(tag)}</span><h3>${esc(name)}</h3><p>${esc(line)}</p>${btn(c.hero.b1, H("book"), i === 1 ? "btn-black btn-sm" : "btn-gold btn-sm")}</article>`).join("")}</div><p class="bigquote gold reveal">${esc(c.programs.quote)}</p></div></section>`;
