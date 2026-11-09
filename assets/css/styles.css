@@ -293,3 +293,9 @@ details[open]{border-color:#d4b038}.arrows button:hover,.pain-grid li:hover,.sca
  .dot{position:static;margin:0 auto -22px;box-shadow:none;z-index:2;position:relative}
  .tl-card{text-align:center;padding-top:38px}.tl-card summary{justify-content:center}.tl-card details p{text-align:left}
 }
+/* cabeceras internas con imagen: velo suave a la izquierda (título) y las líneas de luz visibles a la derecha */
+.phero[style*="--img"]{--pos:right center}
+.phero[style*="--img"]::after{background:linear-gradient(90deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,.15) 55%,rgba(0,0,0,0) 80%)}
+@media(max-width:800px){.phero[style*="--img"]{--pos:72% center}.phero[style*="--img"]::after{background:linear-gradient(to top,rgba(0,0,0,.6),rgba(0,0,0,.25))}}
+.phero{display:flex;align-items:center;min-height:clamp(330px,38vw,540px);padding-top:110px;padding-bottom:50px}.phero>.wrap{width:100%}
+@media(max-width:800px){.phero{min-height:360px;padding-top:100px}}
