@@ -118,7 +118,7 @@ function home(l) {
 <section class="s-conc"><div class="wrap">${head2(c.pillars.label, c.pillars.h2, "", true)}
  <div class="cards3">${c.pillars.items.map(([t, d], i) => `<article class="gcard reveal"><b>${num(i)}</b><h3>${esc(t)}</h3><p>${esc(d[0].toUpperCase() + d.slice(1))}</p></article>`).join("")}</div></div></section>
 
-<section class="s-dark"><div class="wrap">
+<section class="s-char"><div class="wrap">
  ${head2(c.programs.label, c.programs.h2, `<p class="lead muted">${esc(c.programs.intro)}</p>`)}
  <div class="cards4">${c.programs.cards.map(([tag, name, line], i) => `<a class="gcard prog reveal${i === 1 ? " flag" : ""}" href="${H("programs")}#p${i + 1}"><span class="pill">${esc(tag)}</span><h3>${esc(name)}</h3><p>${esc(line)}</p><span class="go">${esc(c.programs.btn)} ${arrow}</span></a>`).join("")}</div>
  <p class="bigquote gold reveal">${esc(c.programs.quote)}</p></div></section>
@@ -135,12 +135,12 @@ function home(l) {
 <div class="statband"><div class="wrap stats4">${c.mentors.stats.map(([n, t]) => `<div><b data-count="${esc(n)}">${esc(n)}</b><span>${esc(t)}</span></div>`).join("")}</div></div>
 <div class="s-dark tight"><div class="wrap"><div class="row c-row">${btn(c.mentors.btn, H("about"), "btn-ghost")}</div></div></div>
 
-<section class="s-dark bg-grid"><div class="wrap">${head2(c.events.label, c.events.h2, "", true)}
+<section class="s-dark"><div class="wrap">${head2(c.events.label, c.events.h2, "", true)}
  <div class="cards2">${c.events.items.map(([t, d, b, a]) => `<a class="gcard reveal" href="${H("events")}#${a}"><span class="pill">${esc(t.split(" · ")[0])}</span><h3>${esc(t.split(" · ")[1] || t)}</h3><p>${esc(d)}</p><span class="go">${esc(b)} ${arrow}</span></a>`).join("")}</div></div></section>
 
 <section class="s-dark tight"><div class="wrap"><div class="freecard reveal"><div><h2>${esc(c.free.h2)}</h2><p>${esc(c.free.p)}</p></div>${btn(c.free.btn, "#", "btn-black")}</div></div></section>
 
-<section class="s-cream"><div class="wrap">${head2("", c.fit.h2, `<p class="lead">${esc(c.fit.intro)}</p>`)}
+<section class="s-char bg-grid"><div class="wrap">${head2("", c.fit.h2, `<p class="lead">${esc(c.fit.intro)}</p>`)}
  <div class="cards2"><div class="fitcard yes reveal"><h3>${esc(c.fit.yes)}</h3><ul>${c.fit.yesItems.map((t) => `<li>${esc(t)}</li>`).join("")}</ul></div>
  <div class="fitcard no reveal"><h3>${esc(c.fit.no)}</h3><ul>${c.fit.noItems.map((t) => `<li>${esc(t)}</li>`).join("")}</ul></div></div></div></section>
 

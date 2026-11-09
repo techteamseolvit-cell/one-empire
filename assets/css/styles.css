@@ -178,3 +178,13 @@ details[open]{border-color:#d4b038}.arrows button:hover,.pain-grid li:hover,.sca
 .closing h2{max-width:min(100%,1100px)}.hero h1{max-width:min(100%,1000px)}
 .sec-head h2{max-width:none}
 .closing .lead{max-width:min(100%,900px)}.closing .soft{max-width:min(100%,820px)}
+
+/* tarjetas más visibles frente al fondo de su sección */
+.gcard{background:linear-gradient(150deg,#41300f 0%,#241a0d 52%,#130e07 100%);border:1px solid rgba(212,176,56,.42);box-shadow:0 20px 44px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,240,181,.12)}
+.gcard.flag{background:var(--grad);border-color:transparent}
+/* para quién es: sin crema, tarjetas oscuras y listas repartidas parejo */
+.fitcard{background:linear-gradient(150deg,#41300f 0%,#241a0d 52%,#130e07 100%);border:1px solid rgba(212,176,56,.42);color:var(--txt);box-shadow:0 20px 44px rgba(0,0,0,.5)}
+.fitcard.yes{border:0}.fitcard h3{color:#fff}.fitcard ul{flex:1;display:flex;flex-direction:column}
+.fitcard li{flex:1;display:flex;align-items:center;border-top:1px solid rgba(212,176,56,.22);padding-left:34px}.fitcard li::before{top:50%;transform:translateY(-50%)}
+.yes li::before{color:#e8c961}.no li::before{color:#8a8578}.fitcard.no{opacity:.95}
+.go svg path,.more svg path{stroke:#e8c961}.gcard.flag .go svg path{stroke:#000}
