@@ -1,4 +1,7 @@
-:root{--black:#000;--char:#101010;--card:#171717;--cream:#f4efe4;--ink:#14110b;--gold:#d9ae3f;--gold-hi:#f3d77a;--gold-lo:#9a7424;--txt:#d9d4c8;--muted:#9c968a;--line:rgba(255,255,255,.1);--r:22px;
+:root{--black:#000;--char:#101010;--card:#171717;--cream:#f4efe4;--ink:#14110b;--gold:#d4b038;--gold-hi:#f2d575;--gold-lo:#8f6b1f;
+--grad:linear-gradient(100deg,#d4b038 0%,#e8c961 30%,#f5d97b 46%,#dec166 54%,#bc9c47 62%,#9d7b2c 70%,#8f6b1f 80%,#8f6b1f 100%);
+--grad-t:linear-gradient(100deg,#d4b038 0%,#e8c961 28%,#f5d97b 50%,#dec166 68%,#bc9c47 86%,#a88535 100%);
+--grad-d:linear-gradient(100deg,#8f6b1f 0%,#bc9c47 30%,#d4b038 52%,#9d7b2c 80%,#8f6b1f 100%);--txt:#d9d4c8;--muted:#9c968a;--line:rgba(255,255,255,.1);--r:22px;
 --display:"Archivo","Arial Black",sans-serif;--sans:"Montserrat",system-ui,sans-serif;--pad:clamp(20px,5vw,72px);--max:1240px}
 *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;scroll-padding-top:90px}
 body{background:var(--black);color:var(--txt);font:500 clamp(15px,1.05vw,17px)/1.7 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
@@ -120,3 +123,27 @@ summary::after{content:"+";position:absolute;right:24px;top:50%;transform:transl
  .nav{position:fixed;inset:62px 0 auto;flex-direction:column;align-items:flex-start;background:#000;padding:24px var(--pad) 32px;gap:14px;display:none;margin:0;border-bottom:1px solid var(--line);max-height:calc(100svh - 62px);overflow:auto}.nav.open{display:flex}
  .dd-menu{position:static;opacity:1;visibility:visible;transform:none;border:0;padding:4px 0 4px 14px;background:none}}
 @media(max-width:560px){.pain-grid{grid-template-columns:1fr}}
+
+/* ====== ORO DEGRADADO (el mismo tono del logo en todo el sitio) ====== */
+.a,.eyebrow,.go,.more,.statband b,.pcard b,.pain-grid b,.vmeta strong,#site-footer h4,.bigquote.gold,.closing .lead,.legal h2,.dd-menu b{
+ background-image:var(--grad-t);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+ -webkit-box-decoration-break:clone;box-decoration-break:clone}
+.eyebrow,.pcard b,#site-footer h4{display:inline-block}.statband b{display:block;width:fit-content;margin:0 auto 6px}.statband span{display:block}.pain-grid b,.vmeta strong{justify-self:start}
+.s-cream h2 .a{background-image:var(--grad-d)}
+.go svg,.more svg{stroke:#e8c961}
+/* botones, círculos y bandas rellenas */
+.btn-gold,.play,.scard b,.lang .on,.freecard,.s-cream .bigquote::before{background:var(--grad)}
+.btn-gold:hover{box-shadow:0 10px 30px rgba(212,176,56,.4)}.btn-ghost:hover{border-color:#e2bf63;color:#e2bf63}
+.lang .on{color:#000}.freecard{box-shadow:inset 0 1px 0 rgba(255,255,255,.4)}
+/* bordes en degradado */
+.pill{position:relative;border:0;color:#e8c961;background:rgba(0,0,0,.5);backdrop-filter:blur(6px);-webkit-text-fill-color:currentColor}
+.pill::before,.vid.frame::before,.fitcard.yes::before,.prcard.flag::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;background:var(--grad);
+ -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);mask-composite:exclude;pointer-events:none}
+.vid.frame{border:0}.fitcard.yes{border:0;position:relative}.fitcard.yes::before{padding:2px}
+.prcard.flag{box-shadow:none}.prcard.flag::before{display:block;z-index:2;opacity:1;background-size:auto;padding:2px}
+.prcard.flag:hover{transform:translateY(-6px)}
+.statband{border-block:1px solid transparent;border-image:var(--grad) 1}
+.mph{border-bottom:0;position:relative}.mph::before{display:block!important;content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--grad);z-index:3;opacity:1;mask:none;-webkit-mask:none}
+.proof{border-left:0;position:relative}.proof::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--grad)}
+details[open]{border-color:#d4b038}.arrows button:hover,.pain-grid li:hover,.scard:hover,.pcard:hover,.ecard:hover,.prcard:hover{border-color:#d4b038}
+.dropcap::first-letter{color:#d4b038}
