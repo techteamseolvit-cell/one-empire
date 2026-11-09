@@ -27,7 +27,7 @@ svg{width:16px;height:16px}
 .dd{position:relative}.dd i{display:inline-block;width:5px;height:5px;border:solid currentColor;border-width:0 1.5px 1.5px 0;transform:rotate(45deg);margin:0 0 3px 8px}
 .dd-menu{position:absolute;top:100%;left:-18px;min-width:250px;background:#0b0b0b;border:1px solid var(--line);border-radius:16px;padding:12px 18px;display:grid;opacity:0;visibility:hidden;transform:translateY(8px);transition:.25s}
 .dd:hover .dd-menu,.dd:focus-within .dd-menu{opacity:1;visibility:visible;transform:none}.dd-menu a{padding:8px 0;font-weight:600}.dd-menu b{color:var(--gold);font-size:10px;letter-spacing:.14em;margin-top:8px}
-.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;font-family:var(--display);font-stretch:125%;font-weight:700;font-size:10px}.lang span{padding:7px 11px;color:var(--muted)}.lang .on{background:var(--gold);color:#000}
+.lang{display:flex;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.18);border-radius:999px;overflow:hidden;font-family:var(--display);font-stretch:125%;font-weight:700;font-size:10px}.lang span{padding:7px 11px;color:var(--muted)}.lang .on{background:var(--gold);color:#000}
 .burger{display:none;background:none;border:0;width:34px;height:26px;position:relative;cursor:pointer}.burger span{position:absolute;left:0;width:100%;height:2px;background:#fff}.burger span:first-child{top:8px}.burger span:last-child{top:17px}
 /* fotos: imagen + degradado; si no hay imagen, fondo de respaldo cálido con cuadrícula de plano */
 .photo{position:relative;isolation:isolate;overflow:hidden;background-color:#120e06;
