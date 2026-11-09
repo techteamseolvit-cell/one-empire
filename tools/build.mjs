@@ -5,6 +5,10 @@ import { C } from "./content.mjs";
 import { SEO, SITE } from "./seo.mjs";
 
 const root = path.resolve(import.meta.dirname, "..");
+import crypto from "node:crypto";
+// versión por contenido: evita que el navegador / GitHub Pages sirvan CSS o JS viejos
+const ver = (f) => crypto.createHash("md5").update(fs.readFileSync(path.join(root, f))).digest("hex").slice(0, 8);
+const V = { css: ver("assets/css/styles.css"), js: ver("assets/js/main.js"), cfg: ver("assets/js/config.js") };
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const PAGES = ["home","about","programs","events","results","book","thanks","privacy","terms"];
 const SOCIAL = [["Instagram","https://instagram.com/"],["YouTube","https://youtube.com/"],["Facebook","https://facebook.com/"],["TikTok","https://tiktok.com/"]]; // TODO: URLs reales
@@ -29,7 +33,7 @@ function head(l, p, extra = "") {
 <link rel="icon" href="${up}assets/img/one-empire-isotipo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="${up}assets/css/styles.css">${extra}</head>`;
+<link rel="stylesheet" href="${up}assets/css/styles.css?v=${V.css}">${extra}</head>`;
 }
 
 function chrome(l, p) {
@@ -59,7 +63,7 @@ ${drop(n.programs, "programs", n.progItems, n.progItems.map((_, i) => "p" + (i +
 const wrap = (l, p, main, extraHead = "") => {
   const { header, footer } = chrome(l, p), up = l === "en" ? "../" : "";
   return `${head(l, p, extraHead)}<body data-page="${p}">${header}<main>${main}</main>${footer}
-<script>window.ONE_EMPIRE=${JSON.stringify({ lang: l })}</script><script src="${up}assets/js/config.js"></script><script src="${up}assets/js/main.js"></script></body></html>`;
+<script>window.ONE_EMPIRE=${JSON.stringify({ lang: l })}</script><script src="${up}assets/js/config.js?v=${V.cfg}"></script><script src="${up}assets/js/main.js?v=${V.js}"></script></body></html>`;
 };
 
 

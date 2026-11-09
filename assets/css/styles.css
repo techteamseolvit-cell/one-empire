@@ -209,3 +209,5 @@ details[open]{border-color:#d4b038}.arrows button:hover,.pain-grid li:hover,.sca
 
 /* tarjeta del próximo evento más compacta en escritorio */
 @media(min-width:1001px){.evcard{max-width:600px}.evcard-body{padding:24px 28px;gap:10px}.evcard-body p{font-size:13.5px}}
+
+@media(min-width:1001px){.evcard{max-width:520px}.evcard-body{padding:20px 24px;gap:8px}.evcard-body h3{font-size:19px}.evcard-body .pill{font-size:9px}}
