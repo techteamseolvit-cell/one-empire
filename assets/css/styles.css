@@ -199,3 +199,6 @@ details[open]{border-color:#d4b038}.arrows button:hover,.pain-grid li:hover,.sca
 }
 @media(min-width:801px){.hero[style*="--img"] .hero-in{max-width:var(--max)}.hero[style*="--img"] .hero-in>*{max-width:620px}.hero[style*="--img"] .hero-in>.row{max-width:none}}
 @media(max-width:800px){.hero .btn{padding:14px 20px;font-size:11px;letter-spacing:.04em}}
+
+/* flyer del evento: se ve completo, sin velo (el texto ya es parte de la imagen) */
+.evcard-img{aspect-ratio:1711/919}.evcard-img::after,.evcard-img::before{display:none}

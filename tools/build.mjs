@@ -9,6 +9,7 @@ const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replac
 const PAGES = ["home","about","programs","events","results","book","thanks","privacy","terms"];
 const SOCIAL = [["Instagram","https://instagram.com/"],["YouTube","https://youtube.com/"],["Facebook","https://facebook.com/"],["TikTok","https://tiktok.com/"]]; // TODO: URLs reales
 const WHATSAPP = "https://wa.me/"; // TODO: número
+const EVENT_URL = "https://onerevolutionevent.com/"; // próximo evento
 const CONTACT = { email: "info@oneempire.com", phone: "" }; // TODO
 
 const slug = (l, p) => SEO[l][p].slug;
@@ -100,8 +101,8 @@ function home(l) {
 
 <section class="s-dark"><div class="wrap">
  <div class="sec-head reveal row-head"><div><span class="eyebrow">${esc(c.event.label)}</span><h2>${tt(c.event.h2)}</h2></div><a class="more" href="${H("events")}">${esc(c.nav.events)} ${arrow}</a></div>
- <article class="evcard reveal"><div class="evcard-img photo" ${pic(l, "evento-next-level-leaders.webp", "Flyer/foto del próximo evento presencial (Next Level Leaders), horizontal 16:7")}></div>
-  <div class="evcard-body"><span class="pill">${esc(c.event.tag)}</span><h3>Next Level Leaders</h3><p>${esc(c.event.line)}</p><p class="meta">${esc(c.event.when)}</p>${btn(c.event.btn, H("events") + "#presencial", "btn-gold btn-sm")}</div></article></div></section>
+ <article class="evcard reveal"><div class="evcard-img photo" ${pic(l, "evento-one-revolution.webp", "Flyer del próximo evento presencial (One Revolution)")}></div>
+  <div class="evcard-body"><span class="pill">${esc(c.event.tag)}</span><h3>One Revolution</h3><p>${esc(c.event.line)}</p><p class="meta">${esc(c.event.when)}</p><a class="btn btn-gold btn-sm" href="${EVENT_URL}" target="_blank" rel="noopener">${esc(c.event.btn)}</a></div></article></div></section>
 
 <section class="s-char bg-grid"><div class="wrap">${head2("", c.pain.h2, `<p class="lead muted">${esc(c.pain.intro)}</p>`)}
  <ol class="pain-grid">${c.pain.items.map((t, i) => `<li class="reveal"><b>${num(i)}</b><span>${esc(t)}</span></li>`).join("")}</ol></div></section>
@@ -174,7 +175,7 @@ function programs(l) {
 }
 function events(l) {
   const c = C[l], pg = c.pages.events, H = (k) => slug(l, k);
-  const grp = (id, title, items) => `<div class="ev-group" id="${id}"><h2 class="h2 reveal">${tt(title)}</h2><div class="cards3">${items.map((t) => `<article class="evcard2 reveal"><span class="pill">${esc(title)}</span><h3>${esc(t)}</h3><p class="muted">${esc(pg.soon)}</p>${btn(c.event.btn, H("book"), "btn-gold btn-sm")}</article>`).join("")}</div></div>`;
+  const grp = (id, title, items) => `<div class="ev-group" id="${id}"><h2 class="h2 reveal">${tt(title)}</h2><div class="cards3">${items.map((t) => `${t === "One Revolution" ? `<article class="evcard2 reveal"><span class="pill">${esc(title)}</span><h3>${esc(t)}</h3><p>${esc(c.event.when)}</p><p class="muted">${esc(c.event.line)}</p><a class="btn btn-gold btn-sm" href="${EVENT_URL}" target="_blank" rel="noopener">${esc(c.event.btn)}</a></article>` : `<article class="evcard2 reveal"><span class="pill">${esc(title)}</span><h3>${esc(t)}</h3><p class="muted">${esc(pg.soon)}</p>${btn(c.event.btn, H("book"), "btn-gold btn-sm")}</article>`}`).join("")}</div></div>`;
   return `${pageHero(l, "events", pg.h1, pg.sub)}<section class="s-dark"><div class="wrap">${grp("presencial", pg.inperson, c.nav.inperson_items)}${grp("online", pg.online, c.nav.online_items)}</div></section>`;
 }
 function results(l) {
