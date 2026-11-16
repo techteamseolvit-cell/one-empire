@@ -111,19 +111,19 @@ function home(l) {
   <div class="evcard-body"><span class="pill">${esc(c.event.tag)}</span><h3>One Revolution</h3><p>${esc(c.event.line)}</p><p class="meta">${esc(c.event.when)}</p>${btn(c.event.btn, EVENT_URL, "btn-gold btn-sm", 'target="_blank" rel="noopener"')}</div></article></div></section>
 
 <section class="s-char"><div class="wrap">${head2("", c.pain.h2, `<p class="lead muted">${esc(c.pain.intro)}</p>`)}
- <ol class="pain-grid">${c.pain.items.map((t, i) => `<li class="reveal"><b>${num(i)}</b><span>${esc(t)}</span></li>`).join("")}</ol></div></section>
+ <ol class="pain-grid">${c.pain.items.map((t, i) => `<li class="reveal pc${i % 4}"><b>${num(i)}</b><span>${esc(t)}</span></li>`).join("")}</ol></div></section>
 
 <section class="s-geo"><div class="wrap">
  <div class="sec-head c reveal"><h2>${tt(c.reality.h2)}</h2></div>
  <div class="cols reveal">${c.reality.p.map((t) => `<p>${esc(t)}</p>`).join("")}</div>
  <p class="bigquote gold reveal">${esc(c.reality.quote)}</p></div></section>
 
-<section class="s-dark"><div class="wrap split">
+<section class="s-dark"><div class="wrap ${hasVideo("hugo-potros.mp4") ? "split" : "solo"}">
  <div class="reveal"><h2 class="h2">${tt(c.proof.h2)}</h2>${c.proof.p.map((t) => `<p>${esc(t)}</p>`).join("")}<div class="row">${btn(c.proof.btn, H("book"), "btn-gold")}</div></div>
- <div class="reveal">${video(l, "hugo-potros.mp4", c.proof.video, "frame")}</div></div></section>
+ ${hasVideo("hugo-potros.mp4") ? `<div class="reveal">${video(l, "hugo-potros.mp4", c.proof.video, "frame")}</div>` : ""}</div></section>
 
 <section class="s-conc"><div class="wrap">${head2(c.pillars.label, c.pillars.h2, "", true)}
- <div class="cards3">${c.pillars.items.map(([t, d], i) => `<article class="gcard pil reveal" ${pic(l, "pilar-" + ["marketing", "ventas", "operaciones"][i] + ".jpg", "Imagen del pilar " + t + ", vertical 4:5")}><b>${num(i)}</b><h3>${esc(t)}</h3><p>${esc(d[0].toUpperCase() + d.slice(1))}</p></article>`).join("")}</div></div></section>
+ <div class="cards3">${c.pillars.items.map(([t, d], i) => `<article class="gcard pil pil${i + 1} reveal" ${pic(l, "pilar-" + ["marketing", "ventas", "operaciones"][i] + ".jpg", "Imagen del pilar " + t + ", vertical 4:5")}><b>${num(i)}</b><h3>${esc(t)}</h3><p>${esc(d[0].toUpperCase() + d.slice(1))}</p></article>`).join("")}</div></div></section>
 
 <section class="s-char"><div class="wrap">
  ${head2(c.programs.label, c.programs.h2, `<p class="lead muted">${esc(c.programs.intro)}</p>`)}
@@ -144,8 +144,6 @@ function home(l) {
 
 <section class="s-dark"><div class="wrap">${head2(c.events.label, c.events.h2, "", true)}
  <div class="cards2">${c.events.items.map(([t, d, b, a]) => `<a class="gcard reveal" href="${H("events")}#${a}"><span class="pill">${esc(t.split(" · ")[0])}</span><h3>${esc(t.split(" · ")[1] || t)}</h3><p>${esc(d)}</p><span class="go">${esc(b)} ${arrow}</span></a>`).join("")}</div></div></section>
-
-<section class="s-dark tight"><div class="wrap"><div class="freecard reveal"><div><h2>${esc(c.free.h2)}</h2><p>${esc(c.free.p)}</p></div>${btn(c.free.btn, "#", "btn-black")}</div></div></section>
 
 <section class="s-char"><div class="wrap">${head2("", c.fit.h2, `<p class="lead">${esc(c.fit.intro)}</p>`)}
  <div class="cards2"><div class="fitcard yes reveal"><h3>${esc(c.fit.yes)}</h3><ul>${c.fit.yesItems.map((t) => `<li>${esc(t)}</li>`).join("")}</ul></div>
@@ -206,11 +204,11 @@ function results(l) {
 function book(l) {
   const pg = C[l].pages.book;
   return `<section class="s-dark book"><div class="wrap"><div class="sec-head reveal"><h1>${tt(pg.h1)}</h1><p class="lead muted">${esc(pg.sub)}</p></div>
-<div class="book-grid"><div>${video(l, "vsl.mp4", pg.vsl, "frame wide")}<p class="muted small">${esc(pg.q)}</p></div><div id="calendar" data-pending="${esc(pg.pending)}"></div></div></div></section>`;
+<div class="book-grid"><div>${hasVideo("vsl.mp4") ? video(l, "vsl.mp4", pg.vsl, "frame wide") : ""}<p class="muted small">${esc(pg.q)}</p></div><div id="calendar" data-pending="${esc(pg.pending)}"></div></div></div></section>`;
 }
 function thanks(l) {
   const pg = C[l].pages.thanks;
-  return `<section class="s-dark book"><div class="wrap"><div class="sec-head reveal"><h1>${tt(pg.h1)}</h1><p class="lead muted">${esc(pg.sub)}</p></div><div class="thanks-vid">${video(l, "bienvenida.mp4", pg.video, "frame wide")}</div></div></section>`;
+  return `<section class="s-dark book"><div class="wrap"><div class="sec-head reveal"><h1>${tt(pg.h1)}</h1><p class="lead muted">${esc(pg.sub)}</p></div>${hasVideo("bienvenida.mp4") ? `<div class="thanks-vid">${video(l, "bienvenida.mp4", pg.video, "frame wide")}</div>` : ""}</div></section>`;
 }
 function legal(l, key) {
   const pg = C[l].pages[key];

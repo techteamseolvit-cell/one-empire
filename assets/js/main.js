@@ -31,13 +31,13 @@
 
   // contadores (solo cifras con formato $600K+, $180M+)
   document.querySelectorAll("[data-count]").forEach(function (el) {
-    var m = el.dataset.count.match(/^(\$?)(\d+)(.*)$/);
+    var m = el.dataset.count.match(/^(\$?)([\d,]+)(.*)$/);
     if (!m || reduce || !("IntersectionObserver" in window)) return;
-    var end = +m[2], t0;
+    var end = +m[2].replace(/,/g, ""), t0, big = m[2].indexOf(",") > -1;
     new IntersectionObserver(function (es, o) {
       if (!es[0].isIntersecting) return; o.disconnect();
       (function step(t) { t0 = t0 || t; var p = Math.min((t - t0) / 1400, 1), v = Math.round(end * (1 - Math.pow(1 - p, 3)));
-        el.textContent = m[1] + v + m[3]; if (p < 1) requestAnimationFrame(step); })(performance.now());
+        el.textContent = m[1] + (big ? v.toLocaleString("en-US") : v) + m[3]; if (p < 1) requestAnimationFrame(step); })(performance.now());
     }, { threshold: 0.6 }).observe(el);
   });
 

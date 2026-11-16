@@ -395,3 +395,28 @@ details[open]{border-color:#d4b038}.arrows button:hover,.pain-grid li:hover,.sca
 .gcard.pil::before{opacity:.62}
 .gcard.pil::after{background:linear-gradient(160deg,rgba(14,14,16,.82) 0%,rgba(14,14,16,.55) 50%,rgba(14,14,16,.4) 100%)}
 .gcard.pil>b{background-image:linear-gradient(100deg,#e8c961,#f5d97b 50%,#d4b038)}
+
+/* ====== Ajustes de Mónica ====== */
+/* bloque sin video: texto centrado a ancho cómodo */
+.wrap.solo{max-width:860px;text-align:center}.wrap.solo .row{justify-content:center}.wrap.solo p{margin-inline:auto}
+
+/* pilares: centrados y con color propio (azul, ámbar, cobre) */
+.gcard.pil{align-items:center;text-align:center;justify-content:center}
+.gcard.pil>b{align-self:center}.gcard.pil h3{justify-content:center;text-align:center}.gcard.pil p{text-align:center}
+.gcard.pil::before{opacity:.9;background-position:center 70%}
+.gcard.pil1{--tint:46,112,255}.gcard.pil2{--tint:230,150,40}.gcard.pil3{--tint:224,92,46}
+.gcard.pil::after{background:linear-gradient(160deg,rgba(var(--tint),.55) 0%,rgba(14,14,16,.62) 55%,rgba(14,14,16,.5) 100%)}
+.gcard.pil{border-color:rgba(var(--tint),.55)}
+.gcard.pil>b{background-image:none;-webkit-text-fill-color:#fff;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.7)}
+.gcard.pil h3,.gcard.pil p{text-shadow:0 2px 16px rgba(0,0,0,.85)}
+
+/* dolor: número en círculo dorado centrado y tarjetas con tinte de color */
+.pain-grid li{justify-items:center;text-align:center;align-content:start;gap:16px}
+.pain-grid b{display:grid;place-items:center;width:54px;height:54px;border-radius:50%;background:var(--grad);color:#000;-webkit-text-stroke:0;-webkit-text-fill-color:#000;font-size:17px;box-shadow:0 0 0 6px rgba(212,176,56,.14)}
+.pain-grid li:hover b{-webkit-text-stroke:0;background:var(--grad)}
+.pain-grid li{background:linear-gradient(160deg,rgba(var(--pt),.28) 0%,#26282d 55%,#16171a 100%)}
+.pain-grid li.pc0{--pt:46,112,255}.pain-grid li.pc1{--pt:230,150,40}.pain-grid li.pc2{--pt:224,92,46}.pain-grid li.pc3{--pt:40,170,140}
+.pain-grid li{border-color:rgba(var(--pt),.4)}
+.pain-grid b{justify-self:center}
+.gcard.pil{justify-content:flex-start}
+.wrap.solo p{margin-top:18px}.wrap.solo h2{margin-bottom:6px}
